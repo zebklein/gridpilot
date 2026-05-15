@@ -5,7 +5,7 @@
 Each project is configured by `projects/<name>/project.json`. This file defines:
 - The spreadsheet title
 - Tab names
-- Input fields (what appears in the BUDGET tab)
+- Input fields (what appears in the inputs tab)
 - Scenarios (what scenario tabs are created)
 
 You edit `project.json` before running `init_sheet.py`. After initialization, changing the schema requires re-initializing (delete the sheet, clear `config.json`, re-run init).
@@ -30,7 +30,7 @@ Change any of these values to rename the corresponding Google Sheet tab.
 
 ## Adding or removing input fields
 
-Input fields appear in the BUDGET tab. Each field maps to a JSON key path and a cell in the sheet.
+Input fields appear in the inputs tab (named whatever you set in `project.json`). Each field maps to a JSON key path and a cell in the sheet.
 
 ```json
 "inputs_sections": [
@@ -67,7 +67,7 @@ Input fields appear in the BUDGET tab. Each field maps to a JSON key path and a 
 
 ## Adding a scenario
 
-Scenarios define the budget breakdown tabs. Each scenario gets its own tab.
+Scenarios define the data tabs. Each scenario gets its own tab.
 
 **Single-phase scenario** (Low/Mid/High columns):
 ```json

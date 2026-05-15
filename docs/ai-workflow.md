@@ -1,6 +1,6 @@
 # AI Workflow Guide
 
-Gridpilot is designed for AI-assisted editing. This guide covers how to work with an AI assistant to make changes to your budget.
+Gridpilot is designed for AI-assisted editing. This guide covers how to work with an AI assistant to make changes to your project data.
 
 ---
 
@@ -8,7 +8,7 @@ Gridpilot is designed for AI-assisted editing. This guide covers how to work wit
 
 **Pull before editing. Push after editing.**
 
-The sheet is the source of truth for anyone viewing the budget. The local JSON files are what the AI edits. Always sync them first.
+The sheet is the source of truth for anyone viewing the data. The local JSON files are what the AI edits. Always sync them first.
 
 ```bash
 python scripts/pull.py --project <name>    # get current sheet state

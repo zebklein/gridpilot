@@ -6,7 +6,7 @@ This file is for AI assistants operating in this repository. Read it at the star
 
 ## What This Tool Is
 
-Gridpilot is a Google Sheets budget manager for AI-assisted project tracking. Local JSON files are the AI-editable data layer. Google Sheets is the live presentation layer. Git records every change.
+Gridpilot is a Google Sheets manager for AI-assisted project tracking. Local JSON files are the AI-editable data layer. Google Sheets is the live presentation layer. Git records every change.
 
 ---
 
