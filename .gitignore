@@ -1,7 +1,21 @@
+# Project data (each project lives in its own git repo)
 projects/
+
+# Google OAuth credentials and tokens
 credentials/*.json
 credentials/token.json
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
 .env
+
+# IDE and AI tool state
+.claude/

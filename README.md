@@ -16,7 +16,7 @@ A Google Sheets budget manager designed for AI-assisted project tracking. Define
 ## Quickstart
 
 ```bash
-git clone https://github.com/yourname/gridpilot.git
+git clone https://github.com/zebklein/gridpilot.git
 cd gridpilot
 pip install -r requirements.txt
 ```

@@ -1,6 +1,6 @@
 # AI Workflow Guide
 
-Gridpilot is designed for AI-assisted editing. This guide covers how to work with an AI assistant (like Claude) to make changes to your budget.
+Gridpilot is designed for AI-assisted editing. This guide covers how to work with an AI assistant to make changes to your budget.
 
 ---
 
@@ -20,11 +20,27 @@ python scripts/push.py --project <name> --message "what changed and why"
 
 ## How AI assistants should start each session
 
-1. Read `CLAUDE.md` in the gridpilot repo root
+1. Read `AGENTS.md` in the gridpilot repo root
 2. Run `pull.py` to get the current sheet state
 3. Read the relevant JSON files before proposing changes
 4. Make changes to JSON files only — never to scripts or configs
 5. Run `push.py` with a descriptive commit message
+
+---
+
+## Setting up your AI tool
+
+`AGENTS.md` is the canonical context file. Wire it up once per tool so it loads automatically.
+
+| Tool | How to load AGENTS.md |
+|---|---|
+| **Claude Code** | Automatic — `CLAUDE.md` in the repo root points to it |
+| **Cursor** | Add to `.cursorrules`: `Always read AGENTS.md at the start of each session.` |
+| **GitHub Copilot** | Copy contents into `.github/copilot-instructions.md` |
+| **Windsurf** | Add to `.windsurfrules`: `Always read AGENTS.md at the start of each session.` |
+| **Cline** | Add to `.clinerules`: `Always read AGENTS.md at the start of each session.` |
+| **Aider** | Run with `--read AGENTS.md` flag |
+| **Any other tool** | Paste the contents of `AGENTS.md` into the system prompt or project instructions |
 
 ---
 
