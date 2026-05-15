@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "description": "Phased build across two construction phases. Phase 1 = core structure and primary living space. Phase 2 = secondary living space or expansions.",
+    "remobilization_premium_pct": 0.10,
+    "phase_gap_notes": "months between Phase 1 completion and Phase 2 start",
+    "last_pulled": null,
+    "last_pushed": null
+  },
+  "phase1": {
+    "notes": "Primary build — main structure and primary living space.",
+    "line_items": [
+      {"section": "Due Diligence", "id": "dd_survey",         "label": "Boundary & Topo Survey",       "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Due Diligence", "id": "dd_wetland",        "label": "Wetland Delineation",          "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Due Diligence", "id": "dd_perc",           "label": "Perc Test & Soil Evaluation",  "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Due Diligence", "id": "dd_well_septic",    "label": "Well / Septic Feasibility",    "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Due Diligence", "id": "dd_environmental",  "label": "Environmental Review",         "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Due Diligence", "id": "dd_title_legal",    "label": "Title, Easement & Legal Review","low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Soft Costs", "id": "soft_architect",       "label": "Architect",                    "formula": true, "low": null, "mid": null, "high": null, "notes": "Calculated from BUDGET: architect_pct x construction mid estimate"},
+      {"section": "Soft Costs", "id": "soft_engineering",     "label": "Civil + Structural Engineering","formula": true, "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Soft Costs", "id": "soft_septic_designer", "label": "Septic Designer",              "low": null, "mid": null, "high": null, "notes": "Size for full eventual bedroom count"},
+      {"section": "Soft Costs", "id": "soft_permits",         "label": "Permits & Fees",               "formula": true, "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Soft Costs", "id": "soft_survey_geotech",  "label": "Survey & Geotech",             "formula": true, "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Soft Costs", "id": "soft_legal",           "label": "Legal & Miscellaneous",        "formula": true, "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Soft Costs", "id": "soft_loan_fees",       "label": "Construction Loan Fees",       "formula": true, "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Soft Costs", "id": "soft_insurance",       "label": "Builder's Risk Insurance",     "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Site Work", "id": "site_clearing",         "label": "Land Clearing & Grading",      "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_driveway",         "label": "Driveway",                     "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_drainage",         "label": "Drainage & Stormwater",        "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_excavation",       "label": "Excavation",                   "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_erosion",          "label": "Erosion Control",              "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_trenching",        "label": "Utility Trenching",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_well",             "label": "Well",                         "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_septic",           "label": "Septic System",                "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_electric",         "label": "Electrical Service",           "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_propane",          "label": "Propane / Gas",                "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Site Work", "id": "site_fiber",            "label": "Fiber / Internet Run",         "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Foundation", "id": "fdn_main",             "label": "Foundation",                   "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Structure", "id": "str_framing",           "label": "Framing",                      "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_roofing",           "label": "Roofing",                      "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_cladding",          "label": "Exterior Cladding",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_windows",           "label": "Windows & Doors",              "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_garage",            "label": "Garage",                       "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_decks",             "label": "Decks / Porches",              "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "MEP", "id": "mep_hvac",                    "label": "HVAC",                         "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_electrical",              "label": "Electrical",                   "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_plumbing",                "label": "Plumbing",                     "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_fireplaces",              "label": "Fireplaces",                   "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_ventilation",             "label": "ERV / Ventilation",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_smart_home",              "label": "Smart Home / AV",              "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_backup_power",            "label": "Backup Power / Generator",    "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Interior", "id": "int_drywall",            "label": "Drywall & Plaster",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_flooring",           "label": "Flooring",                     "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_paint",              "label": "Paint & Wall Finishes",        "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_trim",               "label": "Trim & Millwork",              "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_cabinetry",          "label": "Cabinetry",                    "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_kitchens",           "label": "Kitchen(s)",                   "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_bathrooms",          "label": "Bathrooms",                    "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_lighting",           "label": "Lighting Fixtures",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_appliances",         "label": "Appliances",                   "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Specialty", "id": "spec_landscape",        "label": "Landscaping",                  "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Specialty", "id": "spec_fencing",          "label": "Fencing & Gates",              "low": null, "mid": null, "high": null, "notes": ""}
+    ]
+  },
+  "phase2": {
+    "notes": "Secondary build — additional living space, expansions, or deferred features.",
+    "line_items": [
+      {"section": "Soft Costs", "id": "soft_architect_p2",    "label": "Architect",                    "low": null, "mid": null, "high": null, "notes": "Phase 2 architect fees"},
+      {"section": "Soft Costs", "id": "soft_permits_p2",      "label": "Permits & Fees",               "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Soft Costs", "id": "soft_loan_fees_p2",    "label": "Construction Loan Fees",       "formula": true, "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Soft Costs", "id": "soft_insurance_p2",    "label": "Builder's Risk Insurance",     "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Foundation", "id": "fdn_p2",               "label": "Foundation",                   "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Structure", "id": "str_framing_p2",        "label": "Framing",                      "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_roofing_p2",        "label": "Roofing",                      "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_cladding_p2",       "label": "Exterior Cladding",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Structure", "id": "str_windows_p2",        "label": "Windows & Doors",              "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "MEP", "id": "mep_hvac_p2",                 "label": "HVAC",                         "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_electrical_p2",           "label": "Electrical",                   "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "MEP", "id": "mep_plumbing_p2",             "label": "Plumbing",                     "low": null, "mid": null, "high": null, "notes": ""},
+
+      {"section": "Interior", "id": "int_drywall_p2",         "label": "Drywall & Plaster",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_flooring_p2",        "label": "Flooring",                     "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_paint_p2",           "label": "Paint & Wall Finishes",        "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_trim_p2",            "label": "Trim & Millwork",              "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_cabinetry_p2",       "label": "Cabinetry",                    "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_kitchens_p2",        "label": "Kitchen(s)",                   "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_bathrooms_p2",       "label": "Bathrooms",                    "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_lighting_p2",        "label": "Lighting Fixtures",            "low": null, "mid": null, "high": null, "notes": ""},
+      {"section": "Interior", "id": "int_appliances_p2",      "label": "Appliances",                   "low": null, "mid": null, "high": null, "notes": ""}
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "description": "Renovation scenario. All estimates in USD. Low/Mid/High reflect uncertainty before bids.",
+    "last_pulled": null,
+    "last_pushed": null
+  },
+  "line_items": [
+    {"section": "Demo & Prep",  "id": "demo_interior",    "label": "Interior Demo",             "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Demo & Prep",  "id": "demo_haul",        "label": "Debris Haul-Away",          "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Demo & Prep",  "id": "demo_permits",     "label": "Permits",                   "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Demo & Prep",  "id": "demo_design",      "label": "Design / Architect",        "low": null, "mid": null, "high": null, "notes": ""},
+
+    {"section": "Structural",   "id": "str_framing",      "label": "Framing & Carpentry",       "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Structural",   "id": "str_foundation",   "label": "Foundation Repair",         "low": null, "mid": null, "high": null, "notes": "If needed"},
+    {"section": "Structural",   "id": "str_insulation",   "label": "Insulation",                "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Structural",   "id": "str_windows",      "label": "Windows & Doors",           "low": null, "mid": null, "high": null, "notes": ""},
+
+    {"section": "Electrical",   "id": "elec_panel",       "label": "Panel Upgrade",             "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Electrical",   "id": "elec_wiring",      "label": "Wiring & Outlets",          "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Electrical",   "id": "elec_lighting",    "label": "Lighting Fixtures",         "low": null, "mid": null, "high": null, "notes": ""},
+
+    {"section": "Plumbing",     "id": "plmb_rough",       "label": "Rough-In Plumbing",         "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Plumbing",     "id": "plmb_fixtures",    "label": "Fixtures & Trim",           "low": null, "mid": null, "high": null, "notes": ""},
+
+    {"section": "HVAC",         "id": "hvac_system",      "label": "HVAC System",               "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "HVAC",         "id": "hvac_ductwork",    "label": "Ductwork",                  "low": null, "mid": null, "high": null, "notes": ""},
+
+    {"section": "Finishes",     "id": "fin_drywall",      "label": "Drywall",                   "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Finishes",     "id": "fin_paint",        "label": "Paint",                     "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Finishes",     "id": "fin_flooring",     "label": "Flooring",                  "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Finishes",     "id": "fin_trim",         "label": "Trim & Millwork",           "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Finishes",     "id": "fin_cabinetry",    "label": "Cabinetry",                 "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Finishes",     "id": "fin_tile",         "label": "Tile Work",                 "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Finishes",     "id": "fin_appliances",   "label": "Appliances",                "low": null, "mid": null, "high": null, "notes": ""},
+
+    {"section": "Exterior",     "id": "ext_siding",       "label": "Siding / Cladding",         "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Exterior",     "id": "ext_roofing",      "label": "Roofing",                   "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Exterior",     "id": "ext_gutters",      "label": "Gutters & Drainage",        "low": null, "mid": null, "high": null, "notes": ""},
+
+    {"section": "Landscaping",  "id": "land_grading",     "label": "Grading & Drainage",        "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Landscaping",  "id": "land_plants",      "label": "Planting & Sod",            "low": null, "mid": null, "high": null, "notes": ""},
+    {"section": "Landscaping",  "id": "land_hardscape",   "label": "Hardscape (Patio/Walk)",    "low": null, "mid": null, "high": null, "notes": ""}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "description": "Project task tracker.",
+    "valid_statuses": ["New", "Active", "Complete", "Stopped"],
+    "valid_priorities": ["Critical", "High", "Medium", "Low"],
+    "last_pulled": null,
+    "last_pushed": null
+  },
+  "tasks": [
+    {
+      "id": "task_01",
+      "title": "Define renovation scope and budget",
+      "status": "New",
+      "owner": "",
+      "priority": "Critical",
+      "blocked_by": "",
+      "notes": "Agree on which rooms and systems are in scope. Set a firm budget ceiling.",
+      "resources": ""
+    },
+    {
+      "id": "task_02",
+      "title": "Get 3 contractor bids",
+      "status": "New",
+      "owner": "",
+      "priority": "High",
+      "blocked_by": "task_01",
+      "notes": "Solicit bids from at least 3 contractors. Update scenario JSON with real numbers.",
+      "resources": ""
+    }
+  ]
+}

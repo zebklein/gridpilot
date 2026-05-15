@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "description": "Shared input variables for home renovation project.",
+    "last_pulled": null,
+    "last_pushed": null
+  },
+  "_last_ai_edit": null,
+  "project": {
+    "name": null,
+    "address": null,
+    "scope": null
+  },
+  "budget": {
+    "total": null,
+    "target_sqft": null,
+    "start_date": null
+  },
+  "contingency": {
+    "construction_pct": 0.10,
+    "owner_change_pct": 0.05,
+    "design_pct": 0.05
+  }
+}

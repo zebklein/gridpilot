@@ -1,0 +1,53 @@
+{
+  "spreadsheet_title": "My Renovation — Budget Model",
+
+  "tabs": {
+    "inputs": "BUDGET",
+    "kanban": "KANBAN"
+  },
+
+  "scenarios": [
+    {
+      "id": "renovation",
+      "label": "Renovation",
+      "tab": "RENOVATION",
+      "json_file": "scenario_renovation.json",
+      "phases": null
+    }
+  ],
+
+  "kanban_meta": {
+    "valid_statuses": ["New", "Active", "Complete", "Stopped"],
+    "valid_priorities": ["Critical", "High", "Medium", "Low"]
+  },
+
+  "inputs_sections": [
+    {
+      "id": "project",
+      "label": "PROJECT",
+      "fields": [
+        {"key": "project.name",     "label": "Project Name",    "type": "text"},
+        {"key": "project.address",  "label": "Address",         "type": "text"},
+        {"key": "project.scope",    "label": "Scope Summary",   "type": "text"}
+      ]
+    },
+    {
+      "id": "budget",
+      "label": "BUDGET",
+      "fields": [
+        {"key": "budget.total",           "label": "Total Budget",         "type": "currency"},
+        {"key": "budget.target_sqft",     "label": "Sq Ft Affected",       "type": "number",  "hint": "sq ft"},
+        {"key": "budget.start_date",      "label": "Target Start Date",    "type": "text"}
+      ]
+    },
+    {
+      "id": "contingency",
+      "label": "CONTINGENCY",
+      "fields": [
+        {"key": "contingency.construction_pct", "label": "Construction Contingency", "type": "percent", "hint": "% of hard cost subtotal"},
+        {"key": "contingency.owner_change_pct", "label": "Owner Change Reserve",     "type": "percent", "hint": "% of hard cost subtotal"},
+        {"key": "contingency.design_pct",       "label": "Design Contingency",       "type": "percent", "hint": "% of soft cost subtotal"}
+      ]
+    }
+  ]
+}

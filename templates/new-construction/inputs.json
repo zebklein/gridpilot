@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "description": "Shared input variables. All scenarios derive from these.",
+    "last_pulled": null,
+    "last_pushed": null
+  },
+  "_last_ai_edit": null,
+  "project": {
+    "name": null,
+    "target_location": null,
+    "target_parcel": null,
+    "municipality": null
+  },
+  "land": {
+    "purchase_price": null,
+    "closing_costs_pct": 0.02,
+    "parcel_acres": null
+  },
+  "construction": {
+    "target_sqft": null,
+    "cost_per_sqft_low": null,
+    "cost_per_sqft_mid": null,
+    "cost_per_sqft_high": null
+  },
+  "financing": {
+    "cash_available": null,
+    "construction_loan_rate": 0.075,
+    "construction_loan_ltv": 0.80,
+    "permanent_loan_rate": 0.065,
+    "permanent_loan_term_years": 30,
+    "construction_duration_months": 18,
+    "phase_gap_months": null
+  },
+  "soft_costs": {
+    "architect_pct": 0.08,
+    "engineering_pct": 0.03,
+    "permits_fees_flat": null,
+    "survey_geotech_flat": null,
+    "legal_misc_flat": null
+  },
+  "contingency": {
+    "sitework_pct": 0.10,
+    "construction_pct": 0.10,
+    "owner_change_pct": 0.05,
+    "design_pct": 0.05
+  }
+}

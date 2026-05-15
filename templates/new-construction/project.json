@@ -1,0 +1,96 @@
+{
+  "spreadsheet_title": "My Build — Budget Model",
+
+  "tabs": {
+    "inputs": "BUDGET",
+    "kanban": "KANBAN"
+  },
+
+  "scenarios": [
+    {
+      "id": "full_build",
+      "label": "Full Build",
+      "tab": "FULL_BUILD",
+      "json_file": "scenario_full_build.json",
+      "phases": null
+    },
+    {
+      "id": "phased",
+      "label": "Phased Build",
+      "tab": "PHASED",
+      "json_file": "scenario_phased.json",
+      "phases": ["phase1", "phase2"]
+    }
+  ],
+
+  "kanban_meta": {
+    "valid_statuses": ["New", "Active", "Complete", "Stopped"],
+    "valid_priorities": ["Critical", "High", "Medium", "Low"]
+  },
+
+  "inputs_sections": [
+    {
+      "id": "project",
+      "label": "PROJECT",
+      "fields": [
+        {"key": "project.name",           "label": "Project Name",              "type": "text"},
+        {"key": "project.target_location","label": "Target Location",           "type": "text"},
+        {"key": "project.target_parcel",  "label": "Target Parcel / Address",   "type": "text"},
+        {"key": "project.municipality",   "label": "Municipality / Township",   "type": "text"}
+      ]
+    },
+    {
+      "id": "land",
+      "label": "LAND & ACQUISITION",
+      "fields": [
+        {"key": "land.purchase_price",    "label": "Land Purchase Price",       "type": "currency"},
+        {"key": "land.closing_costs_pct", "label": "Closing Costs",             "type": "percent",  "hint": "% of purchase price"},
+        {"key": "land.parcel_acres",      "label": "Parcel Size",               "type": "number",   "hint": "acres"}
+      ]
+    },
+    {
+      "id": "construction",
+      "label": "CONSTRUCTION",
+      "fields": [
+        {"key": "construction.target_sqft",         "label": "Target Square Footage",     "type": "number",   "hint": "sq ft"},
+        {"key": "construction.cost_per_sqft_low",   "label": "Cost / Sq Ft — Low",        "type": "currency", "hint": "$/sq ft"},
+        {"key": "construction.cost_per_sqft_mid",   "label": "Cost / Sq Ft — Mid",        "type": "currency", "hint": "$/sq ft"},
+        {"key": "construction.cost_per_sqft_high",  "label": "Cost / Sq Ft — High",       "type": "currency", "hint": "$/sq ft"}
+      ]
+    },
+    {
+      "id": "financing",
+      "label": "FINANCING",
+      "fields": [
+        {"key": "financing.cash_available",               "label": "Cash Available",              "type": "currency"},
+        {"key": "financing.construction_loan_rate",       "label": "Construction Loan Rate",      "type": "percent", "hint": "% APR"},
+        {"key": "financing.construction_loan_ltv",        "label": "Construction Loan LTV",       "type": "percent", "hint": "% of project cost"},
+        {"key": "financing.permanent_loan_rate",          "label": "Permanent Loan Rate",         "type": "percent", "hint": "% APR"},
+        {"key": "financing.permanent_loan_term_years",    "label": "Permanent Loan Term",         "type": "number",  "hint": "years"},
+        {"key": "financing.construction_duration_months", "label": "Construction Duration",       "type": "number",  "hint": "months"},
+        {"key": "financing.phase_gap_months",             "label": "Phase Gap (Phased Only)",     "type": "number",  "hint": "months between phases"}
+      ]
+    },
+    {
+      "id": "soft_costs",
+      "label": "SOFT COSTS",
+      "fields": [
+        {"key": "soft_costs.architect_pct",       "label": "Architect Fee",                    "type": "percent", "hint": "% of mid construction cost"},
+        {"key": "soft_costs.engineering_pct",     "label": "Engineering (Civil + Structural)", "type": "percent", "hint": "% of mid construction cost"},
+        {"key": "soft_costs.permits_fees_flat",   "label": "Permits & Fees (Flat)",            "type": "currency"},
+        {"key": "soft_costs.survey_geotech_flat", "label": "Survey & Geotech (Flat)",          "type": "currency"},
+        {"key": "soft_costs.legal_misc_flat",     "label": "Legal & Miscellaneous (Flat)",     "type": "currency"}
+      ]
+    },
+    {
+      "id": "contingency",
+      "label": "CONTINGENCY",
+      "fields": [
+        {"key": "contingency.sitework_pct",     "label": "Sitework Contingency",      "type": "percent", "hint": "% of sitework subtotal"},
+        {"key": "contingency.construction_pct", "label": "Construction Contingency",  "type": "percent", "hint": "% of hard cost subtotal"},
+        {"key": "contingency.owner_change_pct", "label": "Owner Change Reserve",      "type": "percent", "hint": "% of hard cost subtotal"},
+        {"key": "contingency.design_pct",       "label": "Design Contingency",        "type": "percent", "hint": "% of soft cost subtotal"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+projects/
+credentials/*.json
+credentials/token.json
+__pycache__/
+*.pyc
+*.pyo
+.env

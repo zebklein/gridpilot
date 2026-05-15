@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "description": "Project task tracker. AI appends and updates tasks via push; humans update status directly in Sheets. Pull to sync human edits back to this file.",
+    "valid_statuses": ["New", "Active", "Complete", "Stopped"],
+    "valid_priorities": ["Critical", "High", "Medium", "Low"],
+    "last_pulled": null,
+    "last_pushed": null
+  },
+  "tasks": [
+    {
+      "id": "task_01",
+      "title": "Define project scope and budget envelope",
+      "status": "New",
+      "owner": "",
+      "priority": "Critical",
+      "blocked_by": "",
+      "notes": "Establish total available capital, target sq footage, and must-have features. This unlocks all downstream decisions.",
+      "resources": ""
+    },
+    {
+      "id": "task_02",
+      "title": "Set up Google credentials and run init_sheet.py",
+      "status": "New",
+      "owner": "",
+      "priority": "High",
+      "blocked_by": "",
+      "notes": "Follow docs/setup.md. One-time setup per machine. Run init_sheet.py to create the Google Sheet.",
+      "resources": "docs/setup.md | console.cloud.google.com"
+    },
+    {
+      "id": "task_03",
+      "title": "Get contractor estimates for key line items",
+      "status": "New",
+      "owner": "",
+      "priority": "High",
+      "blocked_by": "task_01",
+      "notes": "Contact 2-3 local contractors for ballpark estimates. Update scenario JSON files with real numbers.",
+      "resources": ""
+    }
+  ]
+}
