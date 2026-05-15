@@ -64,6 +64,16 @@ def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
     print(f"  inputs.json updated ({len(key_cell_pairs)} cells)")
 
 
+def parse_num(v):
+    """Parse a sheet cell value into an int, or None for blank/dash/unparseable."""
+    if v in (None, "", "—"):
+        return None
+    try:
+        return int(float(str(v).replace(",", "").replace("$", "")))
+    except ValueError:
+        return None
+
+
 def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_key=None):
     with open(json_path) as f:
         data = json.load(f)
@@ -86,14 +96,6 @@ def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
         spreadsheetId=spreadsheet_id, ranges=ranges
     ).execute()
     value_ranges = result.get("valueRanges", [])
-
-    def parse_num(v):
-        if v in (None, "", "—"):
-            return None
-        try:
-            return int(float(str(v).replace(",", "").replace("$", "")))
-        except ValueError:
-            return None
 
     for i, (item_id, _) in enumerate(row_list):
         item = items_by_id.get(item_id)

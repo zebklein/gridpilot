@@ -73,9 +73,14 @@ def load_row_map(project_dir):
 
 
 def save_row_map(project_dir, rm):
+    # rm is in inverted format {rm_key: {item_id: row_int}} — convert back to
+    # storage format {rm_key: {row_str: item_id}} before writing.
+    raw = {}
+    for key, mapping in rm.items():
+        raw[key] = {str(row): item_id for item_id, row in mapping.items()}
     path = os.path.join(project_dir, "row_map.json")
     with open(path, "w") as f:
-        json.dump(rm, f, indent=2)
+        json.dump(raw, f, indent=2)
 
 
 def get_tab_name(project, logical_name):

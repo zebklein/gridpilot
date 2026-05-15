@@ -152,6 +152,10 @@ def push_kanban(service, spreadsheet_id, project, project_dir, dry_run):
         print("  No kanban tasks to push.")
         return
 
+    if dry_run:
+        print(f"  [dry-run] Would update/append {len(tasks)} kanban tasks")
+        return
+
     # Read existing IDs from col A
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
