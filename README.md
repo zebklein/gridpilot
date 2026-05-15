@@ -94,3 +94,5 @@ Yellow cells = editable inputs. Grey = formula cells (do not overwrite). Dark ro
 - [docs/setup.md](docs/setup.md) — Full Google OAuth setup guide
 - [docs/customization.md](docs/customization.md) — How to configure project.json, add fields, rename scenarios
 - [docs/ai-workflow.md](docs/ai-workflow.md) — How to use an AI assistant with Gridpilot
+
+This project was developed using Claude Sonnet 4.6 for code generation and documentation
