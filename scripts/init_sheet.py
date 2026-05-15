@@ -198,11 +198,7 @@ def setup_inputs(service, spreadsheet_id, sheet_id, project, project_dir):
 
     # Row 0: title (merged)
     rows.append((0, [f"{title} — BUDGET INPUTS", "", ""]))
-    # Row 2: Last Updated
-    rows.append((2, ["Last Updated", '=TEXT(TODAY(),"MMMM D, YYYY")', ""]))
-    input_map["_last_ai_edit"] = "B3"
-
-    current_row = 3  # next row to use (0-indexed); row 3 is blank before first section
+    current_row = 2  # next row to use (0-indexed); row 2 is blank before first section
 
     for section in project["inputs_sections"]:
         current_row += 1  # blank separator row

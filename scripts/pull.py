@@ -29,7 +29,7 @@ def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
         data = json.load(f)
 
     # Build (key, cell) pairs from input_map
-    key_cell_pairs = [(k, v) for k, v in input_map.items() if k != "_last_ai_edit"]
+    key_cell_pairs = list(input_map.items())
     ranges = [f"{tab}!{cell}" for _, cell in key_cell_pairs]
 
     result = service.spreadsheets().values().batchGet(

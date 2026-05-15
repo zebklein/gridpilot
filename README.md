@@ -67,7 +67,8 @@ python scripts/connect.py --project estate --spreadsheet-id 1xF0dAI...
 | Command | Description |
 |---|---|
 | `python scripts/init_sheet.py --project <name> --template <tpl>` | Create project from template + new Google Sheet |
-| `python scripts/connect.py --project <name> --spreadsheet-id <id>` | Connect to an existing sheet |
+| `python scripts/discover.py --project <name> --spreadsheet-id <id>` | Discover and import any existing sheet |
+| `python scripts/connect.py --project <name> --spreadsheet-id <id>` | Reconnect a Gridpilot sheet on a new machine |
 | `python scripts/pull.py --project <name>` | Sync sheet → local JSON + git commit |
 | `python scripts/push.py --project <name>` | Sync local JSON → sheet + git commit |
 | `python scripts/push.py --project <name> --dry-run` | Preview changes without writing |

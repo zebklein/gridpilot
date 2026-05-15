@@ -37,18 +37,14 @@ def push_inputs(service, spreadsheet_id, project, input_map, project_dir, dry_ru
 
     updates = []
     for key, cell in input_map.items():
-        if key == "_last_ai_edit":
-            value = data.get("_last_ai_edit", "")
-        else:
-            parts = key.split(".")
-            node = data
-            try:
-                for part in parts:
-                    node = node[part]
-            except (KeyError, TypeError):
-                continue
-            value = node if node is not None else ""
-
+        parts = key.split(".")
+        node = data
+        try:
+            for part in parts:
+                node = node[part]
+        except (KeyError, TypeError):
+            continue
+        value = node if node is not None else ""
         updates.append({"range": f"{tab}!{cell}", "values": [[value]]})
 
     if dry_run:
@@ -252,15 +248,6 @@ def main():
         service = get_service()
 
     spreadsheet_id = config.get("spreadsheet_id")
-
-    # Stamp push time into inputs.json before pushing
-    inputs_path = os.path.join(project_dir, "inputs.json")
-    with open(inputs_path) as f:
-        inputs_data = json.load(f)
-    ts = datetime.now().strftime("%B %d, %Y at %I:%M %p")
-    inputs_data["_last_ai_edit"] = ts
-    with open(inputs_path, "w") as f:
-        json.dump(inputs_data, f, indent=2, ensure_ascii=True)
 
     print("Pushing BUDGET tab...")
     push_inputs(service, spreadsheet_id, project, input_map, project_dir, args.dry_run)

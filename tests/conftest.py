@@ -77,7 +77,6 @@ SAMPLE_PROJECT = {
 
 SAMPLE_INPUTS = {
     "_meta": {"last_pulled": "2026-01-01T00:00:00", "last_pushed": None},
-    "_last_ai_edit": "January 1, 2026 at 12:00 AM",
     "land": {
         "purchase_price": 185000,
         "closing_costs_pct": 0.02,
@@ -161,7 +160,6 @@ SAMPLE_ROW_MAP_RAW = {
 }
 
 SAMPLE_INPUT_MAP = {
-    "_last_ai_edit": "B3",
     "land.purchase_price": "B10",
     "land.closing_costs_pct": "B11",
     "construction.target_sqft": "B17",

@@ -35,6 +35,28 @@ Then read the relevant JSON files before proposing or making changes.
 
 ---
 
+## Connecting to an Existing Sheet
+
+When the user provides a spreadsheet ID, check the project directory to decide
+which script to run. Do not ask the user — read the files and decide:
+
+```
+projects/<name>/project.json exists?
+├── YES → schema is known. Use connect.py to map field/row positions.
+│         python scripts/connect.py --project <name> --spreadsheet-id <id>
+│
+└── NO  → schema is unknown. Use discover.py to read the sheet and generate
+          all project files from scratch.
+          python scripts/discover.py --project <name> --spreadsheet-id <id>
+          Then review the output summary and project.json with the user before
+          running pull.py — field types and section groupings may need correction.
+```
+
+`connect.py` is also correct when `project.json` exists but `config.json` is
+missing or has a null `spreadsheet_id` (e.g. re-connecting after moving machines).
+
+---
+
 ## Files You Will Edit
 
 | File | When to edit |

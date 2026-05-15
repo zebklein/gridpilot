@@ -34,7 +34,7 @@ def discover_input_map(service, spreadsheet_id, project):
     ).execute()
     col_a = [row[0].strip() if row else "" for row in result.get("values", [])]
 
-    input_map = {"_last_ai_edit": "B3"}  # always fixed
+    input_map = {}
     unmatched = []
 
     for section in project["inputs_sections"]:
