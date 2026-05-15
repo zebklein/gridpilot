@@ -9,8 +9,6 @@ A Google Sheets manager for AI-assisted project tracking. Define your data struc
 - Git records every pull and push as a timestamped commit
 - A Kanban tab tracks project tasks with status, priority, and dependency fields
 
-**Who it's for:** Anyone managing structured project data in Google Sheets who wants an AI assistant that can actually read and edit it — construction projects, renovations, research tracking, resource planning, or anything with rows, estimates, and tasks.
-
 ---
 
 ## Quickstart
