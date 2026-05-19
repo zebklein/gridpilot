@@ -133,7 +133,7 @@ SAMPLE_KANBAN = {
             "id": "task_01",
             "title": "Do a thing",
             "status": "New",
-            "owner": "Zeb",
+            "owner": "Alice",
             "priority": "High",
             "blocked_by": "",
             "notes": "Some notes",

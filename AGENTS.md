@@ -37,9 +37,9 @@ Then read the relevant JSON files before proposing or making changes.
 
 ## Known Projects
 
-| Project | Dir | Spreadsheet ID | Private remote |
-|---|---|---|---|
-| The Estate — Project Model | `projects/the-estate/` | `1xF0dAIyt9vTMGj9s9gc5JAApbgxGqU6VkHja8x2o73o` | `https://github.com/zebklein/gridpilot-projects` |
+Project-specific metadata (spreadsheet ID, private remote URL) lives in each project's
+own `AGENTS.md` inside `projects/<name>/`. Read that file at the start of every session
+for a project — it has the full context.
 
 Each project directory is its own git repo. `pull.py` and `push.py` commit
 automatically, but do **not** push to the remote. Push manually when you want
@@ -134,7 +134,7 @@ python scripts/push.py --project <name> --dry-run
 To **add a task**: add it to `kanban.json` under `"tasks"`, then push.
 To **update status or any field**: edit the sheet directly, then pull to sync back.
 
-Each task: `id` (e.g. `"task_01"`), `title`, `status`, `owner`, `priority`, `blocked_by`, `notes`, `resources`.
+Each task: `id` (e.g. `"task_01"`), `title`, `status`, `owner`, `priority`, `blocked_by`, `description`, `deliverable`, `resources`.
 Valid statuses: `New`, `Active`, `Complete`, `Stopped`.
 Valid priorities: `Critical`, `High`, `Medium`, `Low`.
 
@@ -197,7 +197,8 @@ Items with `"formula": true` and null low/mid/high are formula-driven in the she
       "owner": "",
       "priority": "High",
       "blocked_by": "",
-      "notes": "...",
+      "description": "...",
+      "deliverable": "...",
       "resources": ""
     }
   ]
