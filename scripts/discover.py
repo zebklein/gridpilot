@@ -305,6 +305,7 @@ def discover_scenario_tab(service, spreadsheet_id, tab_name):
                           _is_formula_val(raw_mid) or
                           _is_formula_val(raw_high))
 
+            raw_note = _v(note_cols) or ""
             item = {
                 "section": current_section,
                 "id": item_id,
@@ -312,7 +313,8 @@ def discover_scenario_tab(service, spreadsheet_id, tab_name):
                 "low":   None if is_formula else parse_num(raw_low),
                 "mid":   None if is_formula else parse_num(raw_mid),
                 "high":  None if is_formula else parse_num(raw_high),
-                "notes": _v(note_cols) or "",
+                # Never store formula strings as notes — they belong to the sheet
+                "notes": "" if _is_formula_val(raw_note) else raw_note,
             }
             if is_formula:
                 item["formula"] = True

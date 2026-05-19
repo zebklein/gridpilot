@@ -139,7 +139,7 @@ def pull_kanban(service, spreadsheet_id, project, project_dir):
 
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
-        range=f"{tab}!A2:H1000",
+        range=f"{tab}!A2:I1000",
     ).execute()
     rows = result.get("values", [])
 
@@ -149,18 +149,20 @@ def pull_kanban(service, spreadsheet_id, project, project_dir):
     for i, row in enumerate(rows):
         if not any(row):
             continue
-        task_id   = row[0].strip() if len(row) > 0 else ""
-        title     = row[1] if len(row) > 1 else ""
-        status    = row[2] if len(row) > 2 else "New"
-        owner     = row[3] if len(row) > 3 else ""
-        priority  = row[4] if len(row) > 4 else "Medium"
-        blocked_by = row[5] if len(row) > 5 else ""
-        notes     = row[6] if len(row) > 6 else ""
-        resources = row[7] if len(row) > 7 else ""
+        task_id     = row[0].strip() if len(row) > 0 else ""
+        title       = row[1] if len(row) > 1 else ""
+        status      = row[2] if len(row) > 2 else "New"
+        owner       = row[3] if len(row) > 3 else ""
+        priority    = row[4] if len(row) > 4 else "Medium"
+        blocked_by  = row[5] if len(row) > 5 else ""
+        description = row[6] if len(row) > 6 else ""
+        deliverable = row[7] if len(row) > 7 else ""
+        resources   = row[8] if len(row) > 8 else ""
 
         task_data = {"title": title, "status": status, "owner": owner,
                      "priority": priority, "blocked_by": blocked_by,
-                     "notes": notes, "resources": resources}
+                     "description": description, "deliverable": deliverable,
+                     "resources": resources}
 
         if task_id and task_id in existing:
             existing[task_id].update(task_data)

@@ -79,7 +79,8 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
 
         if is_formula_item(item):
             note = item.get("notes", "")
-            if note:
+            # Never write formula strings — they belong to the sheet, not us
+            if note and isinstance(note, str) and not note.startswith("="):
                 updates.append({
                     "range": f"{tab_name}!{notes_col_letter}{row_1idx}",
                     "values": [[note]],
@@ -117,11 +118,14 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
                     "values": [[note]],
                 })
         else:
+            note = item.get("notes", "")
+            if isinstance(note, str) and note.startswith("="):
+                note = ""  # never write formula strings
             row_values = [
                 fmt_currency(item.get("low")),
                 fmt_currency(item.get("mid")),
                 fmt_currency(item.get("high")),
-                item.get("notes", ""),
+                note,
             ]
             updates.append({
                 "range": f"{tab_name}!C{row_1idx}:F{row_1idx}",
@@ -176,12 +180,13 @@ def push_kanban(service, spreadsheet_id, project, project_dir, dry_run):
             task.get("owner", ""),
             task.get("priority", "Medium"),
             task.get("blocked_by", ""),
-            task.get("notes", ""),
+            task.get("description", ""),
+            task.get("deliverable", ""),
             task.get("resources", ""),
         ]
         if tid in existing_rows:
             updates.append({
-                "range": f"{tab}!A{existing_rows[tid]}:H{existing_rows[tid]}",
+                "range": f"{tab}!A{existing_rows[tid]}:I{existing_rows[tid]}",
                 "values": [row_data],
             })
         else:
@@ -196,7 +201,7 @@ def push_kanban(service, spreadsheet_id, project, project_dir, dry_run):
     if appends:
         service.spreadsheets().values().append(
             spreadsheetId=spreadsheet_id,
-            range=f"{tab}!A:H",
+            range=f"{tab}!A:I",
             valueInputOption="USER_ENTERED",
             insertDataOption="INSERT_ROWS",
             body={"values": appends},
