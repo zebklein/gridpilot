@@ -35,6 +35,22 @@ Then read the relevant JSON files before proposing or making changes.
 
 ---
 
+## Known Projects
+
+| Project | Dir | Spreadsheet ID | Private remote |
+|---|---|---|---|
+| The Estate — Project Model | `projects/the-estate/` | `1xF0dAIyt9vTMGj9s9gc5JAApbgxGqU6VkHja8x2o73o` | `https://github.com/zebklein/gridpilot-projects` |
+
+Each project directory is its own git repo. `pull.py` and `push.py` commit
+automatically, but do **not** push to the remote. Push manually when you want
+to sync the private repo:
+
+```bash
+git -C projects/<name> push
+```
+
+---
+
 ## Connecting to an Existing Sheet
 
 When the user provides a spreadsheet ID, check the project directory to decide
@@ -54,6 +70,17 @@ projects/<name>/project.json exists?
 
 `connect.py` is also correct when `project.json` exists but `config.json` is
 missing or has a null `spreadsheet_id` (e.g. re-connecting after moving machines).
+
+### Overriding tab classification in discover.py
+
+`discover.py` classifies tabs by scanning row 1 headers for "low / mid / high"
+(scenario) or "status / priority" (kanban). If a tab's headers are not in row 1,
+the heuristic misclassifies it. Override with `--scenario`:
+
+```bash
+python scripts/discover.py --project <name> --spreadsheet-id <id> \
+  --scenario TAB_NAME --scenario ANOTHER_TAB
+```
 
 ---
 

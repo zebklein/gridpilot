@@ -55,7 +55,29 @@ python scripts/push.py --project garage --message "updated flooring estimate"
 
 Or connect to an existing sheet instead of creating a new one:
 ```bash
+# Sheet created by Gridpilot (schema is known):
 python scripts/connect.py --project estate --spreadsheet-id 1xF0dAI...
+
+# Any existing sheet (schema is discovered automatically):
+python scripts/discover.py --project estate --spreadsheet-id 1xF0dAI...
+```
+
+### Keeping project data in a private repo
+
+Because `projects/` is gitignored, each project directory can point to its own
+remote — typically a **private** GitHub repo separate from the gridpilot app:
+
+```bash
+cd projects/estate
+git remote add origin https://github.com/you/your-private-projects.git
+git push -u origin main
+```
+
+`pull.py` and `push.py` commit locally but never push to the remote. Push
+manually after sessions where you want to back up or share your changes:
+
+```bash
+git -C projects/estate push
 ```
 
 ---
