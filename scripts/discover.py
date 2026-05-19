@@ -48,10 +48,19 @@ def slugify(s):
 def parse_num(v):
     if v in (None, "", "—"):
         return None
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return int(v) if v == int(v) else v
     try:
         return int(float(str(v).replace(",", "").replace("$", "").replace("%", "").replace("£", "")))
-    except ValueError:
+    except (ValueError, TypeError):
         return None
+
+
+def _is_formula_val(v):
+    """True if v is a Sheets formula string (returned by FORMULA valueRenderOption)."""
+    return isinstance(v, str) and v.startswith("=")
 
 
 def guess_type(value):
@@ -251,6 +260,7 @@ def discover_scenario_tab(service, spreadsheet_id, tab_name):
     data_result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
         range=tab_range(tab_name, "A2:J500"),
+        valueRenderOption="FORMULA",
     ).execute()
     data_rows = data_result.get("values", [])
 
@@ -262,11 +272,17 @@ def discover_scenario_tab(service, spreadsheet_id, tab_name):
         seen_ids = set()
         current_section = ""
 
+        _HEADER_LABELS = {"line item", "line items", "description", "item",
+                          "work item", "cost item"}
+
         for i, row in enumerate(data_rows):
             row_num = i + 2
             col_a = row[0].strip() if row else ""
             col_b = row[1].strip() if len(row) > 1 else ""
             if not col_b:
+                continue
+            # Skip repeated header rows (e.g. sheets with two header rows)
+            if col_b.lower() in _HEADER_LABELS:
                 continue
             if col_a:
                 current_section = col_a
@@ -278,19 +294,30 @@ def discover_scenario_tab(service, spreadsheet_id, tab_name):
 
             def _v(cols):
                 for c in cols:
-                    if c < len(row) and row[c]:
+                    if c < len(row) and row[c] not in (None, ""):
                         return row[c]
                 return None
 
-            line_items.append({
+            raw_low  = _v(low_cols)
+            raw_mid  = _v(mid_cols)
+            raw_high = _v(high_cols)
+            is_formula = (_is_formula_val(raw_low) or
+                          _is_formula_val(raw_mid) or
+                          _is_formula_val(raw_high))
+
+            item = {
                 "section": current_section,
                 "id": item_id,
                 "label": col_b,
-                "low":   parse_num(_v(low_cols)),
-                "mid":   parse_num(_v(mid_cols)),
-                "high":  parse_num(_v(high_cols)),
+                "low":   None if is_formula else parse_num(raw_low),
+                "mid":   None if is_formula else parse_num(raw_mid),
+                "high":  None if is_formula else parse_num(raw_high),
                 "notes": _v(note_cols) or "",
-            })
+            }
+            if is_formula:
+                item["formula"] = True
+
+            line_items.append(item)
             row_map[item_id] = row_num
 
         return {"line_items": line_items}, row_map, False, None, warnings
@@ -307,6 +334,8 @@ def discover_scenario_tab(service, spreadsheet_id, tab_name):
 
             current_section = ""
             seen_ids = set()
+            _HEADER_LABELS = {"line item", "line items", "description", "item",
+                              "work item", "cost item"}
 
             for i, row in enumerate(data_rows):
                 row_num = i + 2
@@ -314,21 +343,34 @@ def discover_scenario_tab(service, spreadsheet_id, tab_name):
                 col_b = row[1].strip() if len(row) > 1 else ""
                 if not col_b:
                     continue
+                if col_b.lower() in _HEADER_LABELS:
+                    continue
                 if col_a:
                     current_section = col_a
 
                 base = f"{slugify(current_section)}_{slugify(col_b)}" if current_section else slugify(col_b)
                 item_id = make_unique(f"{base}_p{phase_idx + 1}", seen_ids)
 
-                phases_data[phase].append({
+                raw_low  = row[lc] if lc < len(row) else None
+                raw_mid  = row[mc] if mc < len(row) else None
+                raw_high = row[hc] if hc < len(row) else None
+                is_formula = (_is_formula_val(raw_low) or
+                              _is_formula_val(raw_mid) or
+                              _is_formula_val(raw_high))
+
+                item = {
                     "section": current_section,
                     "id": item_id,
                     "label": col_b,
-                    "low":   parse_num(row[lc] if lc < len(row) else None),
-                    "mid":   parse_num(row[mc] if mc < len(row) else None),
-                    "high":  parse_num(row[hc] if hc < len(row) else None),
+                    "low":   None if is_formula else parse_num(raw_low),
+                    "mid":   None if is_formula else parse_num(raw_mid),
+                    "high":  None if is_formula else parse_num(raw_high),
                     "notes": (row[nc] if nc < len(row) else "") or "",
-                })
+                }
+                if is_formula:
+                    item["formula"] = True
+
+                phases_data[phase].append(item)
                 phases_row_map[phase][item_id] = row_num
 
         scenario_data = {p: {"line_items": items} for p, items in phases_data.items()}

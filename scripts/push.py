@@ -190,7 +190,7 @@ def push_kanban(service, spreadsheet_id, project, project_dir, dry_run):
         return
 
     if updates:
-        batch_write(service, spreadsheet_id, updates)
+        batch_write(service, spreadsheet_id, updates, value_input_option="USER_ENTERED")
     if appends:
         service.spreadsheets().values().append(
             spreadsheetId=spreadsheet_id,

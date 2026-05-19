@@ -26,11 +26,17 @@ def write_range(service, spreadsheet_id, range_notation, values):
     ).execute()
 
 
-def batch_write(service, spreadsheet_id, data):
-    """data: list of {"range": "A1 notation", "values": [[...]]}"""
+def batch_write(service, spreadsheet_id, data, value_input_option="RAW"):
+    """
+    data: list of {"range": "A1 notation", "values": [[...]]}
+    RAW (default): writes values as-is — safe for round-tripping numbers and text,
+    never interprets formulas or converts types.
+    USER_ENTERED: pass explicitly only when writing kanban dropdowns or other
+    values that need Sheets-side type coercion.
+    """
     service.spreadsheets().values().batchUpdate(
         spreadsheetId=spreadsheet_id,
-        body={"valueInputOption": "USER_ENTERED", "data": data},
+        body={"valueInputOption": value_input_option, "data": data},
     ).execute()
 
 

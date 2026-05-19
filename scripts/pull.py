@@ -66,12 +66,16 @@ def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
 
 
 def parse_num(v):
-    """Parse a sheet cell value into an int, or None for blank/dash/unparseable."""
+    """Parse a sheet cell value into a number, or None for blank/dash/unparseable."""
     if v in (None, "", "—"):
         return None
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return int(v) if v == int(v) else v
     try:
         return int(float(str(v).replace(",", "").replace("$", "")))
-    except ValueError:
+    except (ValueError, TypeError):
         return None
 
 
@@ -94,7 +98,8 @@ def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
         return
 
     result = service.spreadsheets().values().batchGet(
-        spreadsheetId=spreadsheet_id, ranges=ranges
+        spreadsheetId=spreadsheet_id, ranges=ranges,
+        valueRenderOption="UNFORMATTED_VALUE",
     ).execute()
     value_ranges = result.get("valueRanges", [])
 
@@ -104,7 +109,11 @@ def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
             continue
         row_vals = value_ranges[i].get("values", [[]])[0] if value_ranges[i].get("values") else []
 
-        # Only update non-formula items (items that had values, not None)
+        # Skip formula-driven items — their values are owned by the sheet
+        if item.get("formula"):
+            continue
+
+        # Only update items that carry editable values (non-formula, non-null)
         if item.get("low") is not None or item.get("mid") is not None:
             item["low"]  = parse_num(row_vals[0]) if len(row_vals) > 0 else item["low"]
             item["mid"]  = parse_num(row_vals[1]) if len(row_vals) > 1 else item["mid"]
