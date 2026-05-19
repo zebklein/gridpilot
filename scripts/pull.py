@@ -29,8 +29,9 @@ def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
         data = json.load(f)
 
     # Build (key, cell) pairs from input_map
+    # Cells may be bare ("B24") or tab-qualified ("CAPITAL!B4")
     key_cell_pairs = list(input_map.items())
-    ranges = [f"{tab}!{cell}" for _, cell in key_cell_pairs]
+    ranges = [cell if "!" in cell else f"{tab}!{cell}" for _, cell in key_cell_pairs]
 
     result = service.spreadsheets().values().batchGet(
         spreadsheetId=spreadsheet_id, ranges=ranges,

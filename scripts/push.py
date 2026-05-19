@@ -45,7 +45,9 @@ def push_inputs(service, spreadsheet_id, project, input_map, project_dir, dry_ru
         except (KeyError, TypeError):
             continue
         value = node if node is not None else ""
-        updates.append({"range": f"{tab}!{cell}", "values": [[value]]})
+        # Cells may be bare ("B24") or tab-qualified ("CAPITAL!B4")
+        range_ref = cell if "!" in cell else f"{tab}!{cell}"
+        updates.append({"range": range_ref, "values": [[value]]})
 
     if dry_run:
         print(f"  [dry-run] Would write {len(updates)} cells to {tab} tab")
