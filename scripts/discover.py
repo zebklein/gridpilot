@@ -374,7 +374,10 @@ def main():
     )
     parser.add_argument("--project", required=True, help="Project name (creates projects/<name>/)")
     parser.add_argument("--spreadsheet-id", required=True, help="Google Sheets spreadsheet ID")
+    parser.add_argument("--scenario", action="append", default=[], metavar="TAB",
+                        help="Force this tab to be classified as a scenario (repeatable)")
     args = parser.parse_args()
+    forced_scenarios = set(args.scenario)
 
     project_dir = os.path.join(GRIDPILOT_ROOT, "projects", args.project)
     os.makedirs(project_dir, exist_ok=True)
@@ -395,8 +398,8 @@ def main():
 
     inputs_tabs, scenario_tabs, kanban_tabs, unknown_tabs = [], [], [], []
     for tab in tab_names:
-        kind = classify_tab(service, spreadsheet_id, tab)
-        print(f"  {tab!r:30s} → {kind}")
+        kind = "scenario" if tab in forced_scenarios else classify_tab(service, spreadsheet_id, tab)
+        print(f"  {tab!r:30s} -> {kind}")
         {"inputs": inputs_tabs, "scenario": scenario_tabs,
          "kanban": kanban_tabs, "unknown": unknown_tabs}[kind].append(tab)
 
@@ -516,7 +519,7 @@ def main():
           f"{sum(len(s['fields']) for s in all_sections)} fields in {len(all_sections)} sections")
     for s in scenarios:
         phase_str = f" ({', '.join(s['phases'])})" if s["phases"] else ""
-        print(f"Scenario: '{s['tab']}'{phase_str} → {s['json_file']}")
+        print(f"Scenario: '{s['tab']}'{phase_str} -> {s['json_file']}")
     print(f"Kanban:   '{kanban_tab}' — {len(kanban_tasks)} tasks")
     if unknown_tabs:
         print(f"Skipped:  {', '.join(unknown_tabs)}")

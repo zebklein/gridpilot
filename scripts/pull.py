@@ -33,7 +33,8 @@ def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
     ranges = [f"{tab}!{cell}" for _, cell in key_cell_pairs]
 
     result = service.spreadsheets().values().batchGet(
-        spreadsheetId=spreadsheet_id, ranges=ranges
+        spreadsheetId=spreadsheet_id, ranges=ranges,
+        valueRenderOption="UNFORMATTED_VALUE",
     ).execute()
     value_ranges = result.get("valueRanges", [])
 
