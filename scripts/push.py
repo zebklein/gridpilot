@@ -58,15 +58,16 @@ def push_inputs(service, spreadsheet_id, project, input_map, project_dir, dry_ru
 
 
 def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_key, dry_run,
-                   is_multiphase=False):
+                   is_multiphase=False, notes_col=None):
     with open(json_path) as f:
         data = json.load(f)
 
     items = data[phase_key]["line_items"] if phase_key else data["line_items"]
     items_by_id = {item["id"]: item for item in items}
 
-    # Notes column: F (index 5) for single-phase, I (index 8) for multi-phase
-    notes_col = "I" if is_multiphase else "F"
+    # Notes column: explicit config overrides default (I for multiphase, F for single-phase)
+    if notes_col is None:
+        notes_col = "I" if is_multiphase else "F"
     notes_col_letter = notes_col
 
     updates = []
@@ -85,6 +86,16 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
                     "range": f"{tab_name}!{notes_col_letter}{row_1idx}",
                     "values": [[note]],
                 })
+            # Formula Phase 1 items may still carry editable Phase 2 data
+            if notes_col and notes_col != "F":
+                p2 = [fmt_currency(item.get("p2_low")),
+                      fmt_currency(item.get("p2_mid")),
+                      fmt_currency(item.get("p2_high"))]
+                if any(v != "" for v in p2):
+                    updates.append({
+                        "range": f"{tab_name}!F{row_1idx}:H{row_1idx}",
+                        "values": [p2],
+                    })
             skipped.append(item_id)
             continue
 
@@ -125,12 +136,39 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
                 fmt_currency(item.get("low")),
                 fmt_currency(item.get("mid")),
                 fmt_currency(item.get("high")),
-                note,
             ]
-            updates.append({
-                "range": f"{tab_name}!C{row_1idx}:F{row_1idx}",
-                "values": [row_values],
-            })
+            if notes_col == "F":
+                # Standard single-phase: pack note into C:F range
+                updates.append({
+                    "range": f"{tab_name}!C{row_1idx}:F{row_1idx}",
+                    "values": [row_values + [note]],
+                })
+            else:
+                # Custom notes column (e.g. "I"): values to C:E or F:H by sheet_phase
+                if item.get("sheet_phase") == 2:
+                    updates.append({
+                        "range": f"{tab_name}!F{row_1idx}:H{row_1idx}",
+                        "values": [row_values],
+                    })
+                else:
+                    updates.append({
+                        "range": f"{tab_name}!C{row_1idx}:E{row_1idx}",
+                        "values": [row_values],
+                    })
+                    # Write Phase 2 values if present
+                    p2 = [fmt_currency(item.get("p2_low")),
+                          fmt_currency(item.get("p2_mid")),
+                          fmt_currency(item.get("p2_high"))]
+                    if any(v != "" for v in p2):
+                        updates.append({
+                            "range": f"{tab_name}!F{row_1idx}:H{row_1idx}",
+                            "values": [p2],
+                        })
+                if note:
+                    updates.append({
+                        "range": f"{tab_name}!{notes_col}{row_1idx}",
+                        "values": [[note]],
+                    })
 
     if dry_run:
         print(f"  [dry-run] Would write {len(updates)} rows to {tab_name} "
@@ -268,7 +306,8 @@ def main():
             rm_key = get_scenario_row_map_key(scenario)
             push_scenario(service, spreadsheet_id, scenario["tab"],
                           row_map.get(rm_key, {}), json_path, phase_key=None,
-                          dry_run=args.dry_run, is_multiphase=False)
+                          dry_run=args.dry_run, is_multiphase=False,
+                          notes_col=scenario.get("notes_col"))
         else:
             for phase in scenario["phases"]:
                 print(f"Pushing {scenario['tab']} tab ({phase})...")

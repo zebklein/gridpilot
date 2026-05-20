@@ -80,7 +80,7 @@ def parse_num(v):
         return None
 
 
-def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_key=None):
+def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_key=None, notes_col=None):
     with open(json_path) as f:
         data = json.load(f)
 
@@ -116,15 +116,27 @@ def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
 
         # Only update items that carry editable values (non-formula, non-null)
         if item.get("low") is not None or item.get("mid") is not None:
-            item["low"]  = parse_num(row_vals[0]) if len(row_vals) > 0 else item["low"]
-            item["mid"]  = parse_num(row_vals[1]) if len(row_vals) > 1 else item["mid"]
-            item["high"] = parse_num(row_vals[2]) if len(row_vals) > 2 else item["high"]
-            # Notes: col F (index 3) for single-phase, col I (index 6) for multi-phase
-            notes_idx = 6 if phase_key else 3
+            # sheet_phase==2 items live in F-H (indices 3-5), others in C-E (indices 0-2)
+            v_off = 3 if (notes_col and item.get("sheet_phase") == 2) else 0
+            item["low"]  = parse_num(row_vals[v_off])     if len(row_vals) > v_off     else item["low"]
+            item["mid"]  = parse_num(row_vals[v_off + 1]) if len(row_vals) > v_off + 1 else item["mid"]
+            item["high"] = parse_num(row_vals[v_off + 2]) if len(row_vals) > v_off + 2 else item["high"]
+            # Notes index: derived from explicit notes_col config, else F(3) or I(6)
+            if notes_col:
+                notes_idx = ord(notes_col.upper()) - ord('C')
+            else:
+                notes_idx = 6 if phase_key else 3
             if len(row_vals) > notes_idx:
                 item["notes"] = row_vals[notes_idx]
             elif len(row_vals) > 3:
                 item["notes"] = row_vals[3]
+
+        # Sync Phase 2 values (F-H) for custom-notes-col scenarios
+        if notes_col and notes_col != "F" and item.get("sheet_phase") != 2:
+            if "p2_low" in item or "p2_mid" in item or "p2_high" in item:
+                item["p2_low"]  = parse_num(row_vals[3]) if len(row_vals) > 3 else item.get("p2_low")
+                item["p2_mid"]  = parse_num(row_vals[4]) if len(row_vals) > 4 else item.get("p2_mid")
+                item["p2_high"] = parse_num(row_vals[5]) if len(row_vals) > 5 else item.get("p2_high")
 
     data.setdefault("_meta", {})["last_pulled"] = datetime.now().isoformat()
     with open(json_path, "w") as f:
@@ -232,7 +244,8 @@ def main():
             print(f"Pulling {scenario['tab']} tab...")
             rm_key = get_scenario_row_map_key(scenario)
             pull_scenario(service, spreadsheet_id, scenario["tab"],
-                          row_map.get(rm_key, {}), json_path, phase_key=None)
+                          row_map.get(rm_key, {}), json_path, phase_key=None,
+                          notes_col=scenario.get("notes_col"))
         else:
             for phase in scenario["phases"]:
                 print(f"Pulling {scenario['tab']} tab ({phase})...")
