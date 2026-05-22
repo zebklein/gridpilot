@@ -1,0 +1,909 @@
+{
+  "line_items": [
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_boundary_topo_survey",
+      "label": "Boundary & Topo Survey",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Full scope in Phase 1 — applies to entire parcel. Lot-size dependent."
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_wetland_delineation",
+      "label": "Wetland Delineation",
+      "low": 3000,
+      "mid": 6000,
+      "high": 12000,
+      "notes": "Full scope in Phase 1. Skip if site is clearly upland."
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_perc_test_soil_evaluation",
+      "label": "Perc Test & Soil Evaluation",
+      "low": 3000,
+      "mid": 5000,
+      "high": 10000,
+      "notes": "Full scope in Phase 1 — site dependent"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_well_septic_feasibility_study",
+      "label": "Well / Septic Feasibility Study",
+      "low": 2000,
+      "mid": 4000,
+      "high": 8000,
+      "notes": "Full scope in Phase 1 — site dependent"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_environmental_review",
+      "label": "Environmental Review",
+      "low": 0,
+      "mid": 5000,
+      "high": 15000,
+      "notes": "Only if prior industrial or agricultural use is suspected"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_title_easement_legal_review",
+      "label": "Title, Easement & Legal Review",
+      "low": 2000,
+      "mid": 4000,
+      "high": 8000,
+      "notes": "Full scope in Phase 1 — applies to entire parcel"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_subtotal_due_diligence",
+      "label": "SUBTOTAL — Due Diligence",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_architect_phase_1_full_design_both_phases",
+      "label": "Architect (Phase 1 - Full Design Both Phases)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "p2_low": 18000,
+      "p2_mid": 35000,
+      "p2_high": 60000,
+      "notes": "Phase 1 pays for full architectural design covering both phases. Phase 2 column: CA / supplemental services."
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_civil_structural_engineering_phase_1",
+      "label": "Civil + Structural Engineering (Phase 1)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Phase 1 covers full site + Phase 1 structure. Phase 2 structural tie-in falls on Phase 2."
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_septic_designer",
+      "label": "Septic Designer",
+      "low": 3000,
+      "mid": 5000,
+      "high": 10000,
+      "notes": "Full scope in Phase 1. Flat cost — system complexity dependent."
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_permits_fees_phase_1",
+      "label": "Permits & Fees (Phase 1)",
+      "low": 8000,
+      "mid": 15000,
+      "high": 28000,
+      "p2_low": 8000,
+      "p2_mid": 15000,
+      "p2_high": 28000,
+      "notes": "Phase 1 permit; Phase 2 re-permit cost falls on Phase 2 financing"
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_survey_geotechnical",
+      "label": "Survey & Geotechnical",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Full scope in Phase 1 — pulled from INPUTS: survey_geotech_flat"
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_legal_miscellaneous",
+      "label": "Legal & Miscellaneous",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Full scope in Phase 1 — pulled from INPUTS: legal_misc_flat"
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_construction_loan_fees_phase_1",
+      "label": "Construction Loan Fees (Phase 1)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Phase 1 only — ~1.5% of Phase 1 loan amount"
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_builder_s_risk_insurance_phase_1",
+      "label": "Builder's Risk Insurance (Phase 1)",
+      "low": 3000,
+      "mid": 5000,
+      "high": 10000,
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null,
+      "notes": "Phase 1 construction period only. Sized for full eventual bedroom count."
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_subtotal_soft_costs",
+      "label": "SUBTOTAL — Soft Costs",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_land_clearing_grading",
+      "label": "Land Clearing & Grading",
+      "low": 25000,
+      "mid": 45000,
+      "high": 75000,
+      "notes": "Full lot clearing in Phase 1 — lot-size dependent, not house sqft. Phase 2 footprint site-cleared upfront to avoid remobilization."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_driveway",
+      "label": "Driveway",
+      "low": 8000,
+      "mid": 15000,
+      "high": 25000,
+      "notes": "Full driveway in Phase 1. Length dependent — not house sqft."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_drainage_stormwater",
+      "label": "Drainage & Stormwater",
+      "low": 8000,
+      "mid": 15000,
+      "high": 28000,
+      "notes": "Full site drainage in Phase 1 — lot-size and topography dependent, not house sqft."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_excavation_phase_1_footprint",
+      "label": "Excavation (Phase 1 Footprint)",
+      "low": 8000,
+      "mid": 12000,
+      "high": 22000,
+      "p2_low": 8000,
+      "p2_mid": 12000,
+      "p2_high": 22000,
+      "notes": "Phase 1 footprint (~1,400 sqft) only; Phase 2 excavation deferred to Phase 2"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_erosion_control",
+      "label": "Erosion Control",
+      "low": 5000,
+      "mid": 8000,
+      "high": 15000,
+      "notes": "Lot-size dependent — not house sqft"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_utility_trenching",
+      "label": "Utility Trenching",
+      "low": 28000,
+      "mid": 50000,
+      "high": 82000,
+      "notes": "Full site prep in Phase 1 including Phase 2 footprint — avoid re-mobilization cost"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_well_drilled",
+      "label": "Well (Drilled)",
+      "low": 12000,
+      "mid": 20000,
+      "high": 35000,
+      "notes": "Full scope in Phase 1. Flat cost — depth/geology dependent."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_septic_tank_field",
+      "label": "Septic (Tank + Field)",
+      "low": 20000,
+      "mid": 35000,
+      "high": 60000,
+      "notes": "Full scope in Phase 1. Sized for full eventual bedroom count across both phases."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_electric_service",
+      "label": "Electric Service",
+      "low": 8000,
+      "mid": 12000,
+      "high": 22000,
+      "notes": "Full service entrance in Phase 1. Sized for full eventual load."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_propane_gas",
+      "label": "Propane / Gas",
+      "low": 5000,
+      "mid": 8000,
+      "high": 15000,
+      "notes": "Full scope in Phase 1. Tank sized for full eventual load."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_internet_fiber",
+      "label": "Internet / Fiber",
+      "low": 8000,
+      "mid": 15000,
+      "high": 30000,
+      "notes": "Full conduit run in Phase 1. Stub out to Phase 2 location — capped and protected."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_subtotal_site_work",
+      "label": "SUBTOTAL — Site Work",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Foundation",
+      "id": "foundation_foundation_phase_1_footprint",
+      "label": "Foundation - Phase 1 Footprint",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "1,400 sqft × $17-25-38/sqft | Conditioned crawlspace — primary suite. Fill BUDGET:rate_foundation_crawl to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_foundation_crawl_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_foundation_crawl_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_foundation_crawl_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_foundation_crawl_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_foundation_crawl_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_foundation_crawl_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Foundation",
+      "id": "foundation_foundation_phase_2_addition",
+      "label": "Foundation — Phase 2 Addition",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "sheet_phase": 2,
+      "notes": "1,800 sqft × $17-25-38/sqft | Financed independently by Phase 2 family group. Fill BUDGET:rate_foundation_crawl to adjust.",
+      "formula": true,
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Foundation",
+      "id": "foundation_subtotal_foundation",
+      "label": "SUBTOTAL — Foundation",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Structure",
+      "id": "structure_framing_phase_1",
+      "label": "Framing - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $31-63-94/sqft (P1) | sqft_phase2 × $31-63-94/sqft (P2) | Minka complex roof rate. Fill BUDGET:rate_framing to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_framing_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_framing_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_framing_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_framing_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_framing_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_framing_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_roofing_phase_1",
+      "label": "Roofing - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $13-20-31/sqft (P1) | sqft_phase2 × $13-20-31/sqft (P2) | Fill BUDGET:rate_roofing to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_roofing_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_roofing_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_roofing_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_roofing_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_roofing_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_roofing_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_insulation_phase_1",
+      "label": "Insulation (Batt + Spray Foam) - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1/2 × BUDGET:rate_insulation | Fill BUDGET rate to compute. Spray foam in crawlspace/attic; batt in walls.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_insulation_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_insulation_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_insulation_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_insulation_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_insulation_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_insulation_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_exterior_cladding_phase_1",
+      "label": "Exterior Cladding - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $17-30-48/sqft (P1) | sqft_phase2 × $17-30-48/sqft (P2) | Phase 2 connection wall finished with temporary cladding in Phase 1. Fill BUDGET:rate_ext_cladding to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_ext_cladding_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_ext_cladding_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_ext_cladding_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_ext_cladding_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_ext_cladding_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_ext_cladding_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_windows_exterior_doors_phase_1",
+      "label": "Windows & Exterior Doors - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $20-33-52/sqft (P1) | sqft_phase2 × $20-33-52/sqft (P2) | Fill BUDGET:rate_windows_doors to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_windows_doors_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_windows_doors_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_windows_doors_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_windows_doors_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_windows_doors_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_windows_doors_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_garage_phase_1_attached",
+      "label": "Garage - Phase 1 (Attached)",
+      "low": 30000,
+      "mid": 50000,
+      "high": 80000,
+      "p2_low": 15000,
+      "p2_mid": 25000,
+      "p2_high": 40000,
+      "notes": "Flat cost — bay count dependent, not house sqft. Phase 1: 1-2 attached bays. Phase 2: optional additional bay."
+    },
+    {
+      "section": "Structure",
+      "id": "structure_courtyard_hardscape_phase_1_shell",
+      "label": "Courtyard Hardscape - Phase 1 Shell",
+      "low": 13000,
+      "mid": 20000,
+      "high": 32000,
+      "p2_low": 6500,
+      "p2_mid": 10000,
+      "p2_high": 16000,
+      "notes": "Phase 1 shell only; Phase 2 tie-in is Phase 2 cost. Feature-based — not house sqft."
+    },
+    {
+      "section": "Structure",
+      "id": "structure_decks_porches_phase_1",
+      "label": "Decks & Porches - Phase 1",
+      "low": 8000,
+      "mid": 15000,
+      "high": 28000,
+      "p2_low": 8000,
+      "p2_mid": 15000,
+      "p2_high": 28000,
+      "notes": "Deck sqft dependent — not house sqft directly. Phase 2 connection wall capped/finished in Phase 1."
+    },
+    {
+      "section": "Structure",
+      "id": "structure_subtotal_structure",
+      "label": "SUBTOTAL — Structure",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "MEP",
+      "id": "mep_hvac_phase_1_shared_mains",
+      "label": "HVAC - Phase 1 + Shared Mains",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $14-22-34/sqft (P1) | sqft_phase2 × $14-22-34/sqft (P2) | Phase 1 installs full system sized for total sqft + P1 distribution. Fill BUDGET:rate_hvac to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_hvac_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_hvac_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_hvac_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_hvac_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_hvac_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_hvac_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_electrical_phase_1_shared_panel",
+      "label": "Electrical - Phase 1 + Shared Panel",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $14-22-34/sqft (P1) | sqft_phase2 × $14-22-34/sqft (P2) | Phase 1 installs main panel (oversized) + P1 circuits. Fill BUDGET:rate_electrical to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_electrical_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_electrical_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_electrical_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_electrical_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_electrical_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_electrical_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_plumbing_phase_1",
+      "label": "Plumbing - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $16-25-39/sqft (P1) | sqft_phase2 × $16-25-39/sqft (P2) | Phase 1 stubs out to Phase 2 location — capped in slab. Fill BUDGET:rate_plumbing to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_plumbing_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_plumbing_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_plumbing_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_plumbing_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_plumbing_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_plumbing_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_water_treatment_system",
+      "label": "Water Treatment System",
+      "low": 4000,
+      "mid": 10000,
+      "high": 22000,
+      "notes": "Full capacity system in Phase 1. Flat cost — treatment type dependent."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_fireplaces_phase_1",
+      "label": "Fireplaces - Phase 1",
+      "low": 5000,
+      "mid": 10000,
+      "high": 20000,
+      "p2_low": 5000,
+      "p2_mid": 10000,
+      "p2_high": 20000,
+      "notes": "Unit-count dependent — not house sqft. Phase 1: 1-2 fireplaces; Phase 2: 1-2 fireplaces. Budget ~$5-12k each."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_ventilation_erv_phase_1",
+      "label": "Ventilation / ERV - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $3-5-8/sqft (P1) | sqft_phase2 × $3-5-8/sqft (P2) | Phase 1 installs full ERV sized for total sqft. Fill BUDGET:rate_ventilation to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_ventilation_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_ventilation_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_ventilation_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_ventilation_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_ventilation_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_ventilation_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_smart_home_low_voltage_phase_1",
+      "label": "Smart Home / Low-Voltage - Phase 1",
+      "low": 0,
+      "mid": 15000,
+      "high": 35000,
+      "p2_low": 0,
+      "p2_mid": 15000,
+      "p2_high": 35000,
+      "notes": "Scope-dependent — not directly sqft. Phase 1 stubs conduit to Phase 2 location. Phase 2 completes Phase 2 side."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_backup_power_generator",
+      "label": "Backup Power / Generator",
+      "low": 0,
+      "mid": 22000,
+      "high": 45000,
+      "notes": "Full capacity system in Phase 1. Flat cost — capacity dependent."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_subtotal_mep",
+      "label": "SUBTOTAL — MEP",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Interior",
+      "id": "interior_drywall_plaster_phase_1",
+      "label": "Drywall & Plaster - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $8-13-21/sqft (P1) | sqft_phase2 × $8-13-21/sqft (P2) | Fill BUDGET:rate_drywall to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_drywall_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_drywall_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_drywall_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_drywall_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_drywall_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_drywall_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_flooring_phase_1",
+      "label": "Flooring - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $14-23-39/sqft (P1) | sqft_phase2 × $14-23-39/sqft (P2) | Mixed materials per suite character. Fill BUDGET:rate_flooring to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_flooring_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_flooring_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_flooring_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_flooring_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_flooring_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_flooring_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_paint_phase_1",
+      "label": "Paint - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $5-9-16/sqft (P1) | sqft_phase2 × $5-9-16/sqft (P2) | Fill BUDGET:rate_paint to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_paint_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_paint_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_paint_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_paint_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_paint_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_paint_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_trim_millwork_phase_1",
+      "label": "Trim & Millwork - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $8-14-28/sqft (P1) | sqft_phase2 × $8-14-28/sqft (P2) | Fill BUDGET:rate_trim_millwork to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_trim_millwork_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_trim_millwork_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_trim_millwork_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_trim_millwork_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_trim_millwork_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_trim_millwork_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_cabinetry_phase_1",
+      "label": "Cabinetry - Phase 1",
+      "low": 8000,
+      "mid": 15000,
+      "high": 28000,
+      "p2_low": 12000,
+      "p2_mid": 22000,
+      "p2_high": 40000,
+      "notes": "Kitchen/bath count dependent — not house sqft. Phase 1: primary suite cabinets. Phase 2: additional suites."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_kitchens_phase_1_1_2_units",
+      "label": "Kitchens - Phase 1 (1 Unit)",
+      "low": 18000,
+      "mid": 30000,
+      "high": 50000,
+      "p2_low": 25000,
+      "p2_mid": 45000,
+      "p2_high": 75000,
+      "notes": "Unit-count dependent — not house sqft. Phase 1: 1 kitchen; Phase 2: 1-3 additional. Budget ~$20-50k per unit."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_bathrooms_phase_1_3_4_baths",
+      "label": "Bathrooms - Phase 1 (2-3 Baths)",
+      "low": 25000,
+      "mid": 40000,
+      "high": 70000,
+      "p2_low": 35000,
+      "p2_mid": 60000,
+      "p2_high": 100000,
+      "notes": "Unit-count dependent — not house sqft. Phase 1: 2-3 baths; Phase 2: 3-5 baths. Budget ~$10-25k/bath."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_library_millwork_phase_1",
+      "label": "Library Millwork - Phase 1",
+      "low": 8000,
+      "mid": 20000,
+      "high": 45000,
+      "p2_low": 8000,
+      "p2_mid": 20000,
+      "p2_high": 45000,
+      "notes": "Feature-based — not house sqft. May be deferred to Phase 2; rough-in structural space only in Phase 1 if deferred."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_lighting_phase_1",
+      "label": "Lighting - Phase 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "sqft_phase1 × $6-13-27/sqft (P1) | sqft_phase2 × $6-13-27/sqft (P2) | Fill BUDGET:rate_lighting to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":    "{construction.sqft_phase1} * {construction.rate_lighting_low}",
+        "mid":    "{construction.sqft_phase1} * {construction.rate_lighting_mid}",
+        "high":   "{construction.sqft_phase1} * {construction.rate_lighting_high}",
+        "p2_low": "{construction.sqft_phase2} * {construction.rate_lighting_low}",
+        "p2_mid": "{construction.sqft_phase2} * {construction.rate_lighting_mid}",
+        "p2_high":"{construction.sqft_phase2} * {construction.rate_lighting_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_appliances_phase_1",
+      "label": "Appliances - Phase 1",
+      "low": 15000,
+      "mid": 28000,
+      "high": 55000,
+      "p2_low": 20000,
+      "p2_mid": 40000,
+      "p2_high": 80000,
+      "notes": "Unit-count dependent — not house sqft. Phase 1: 1 full kitchen suite. Phase 2: additional kitchen appliance packages."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_built_ins_phase_1",
+      "label": "Built-ins - Phase 1",
+      "low": 8000,
+      "mid": 18000,
+      "high": 35000,
+      "p2_low": 10000,
+      "p2_mid": 22000,
+      "p2_high": 42000,
+      "notes": "Scope-dependent — scales loosely with suite count. Phase 1: primary suite built-ins."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_japanese_architectural_finishes_phase_1",
+      "label": "Japanese Architectural Finishes - Phase 1",
+      "low": 15000,
+      "mid": 30000,
+      "high": 65000,
+      "p2_low": 15000,
+      "p2_mid": 30000,
+      "p2_high": 65000,
+      "notes": "Feature-based — not house sqft. Shoji, fusuma, specialty joinery, tatami. Defer most to Phase 2 to reduce Phase 1 cost."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_subtotal_interior",
+      "label": "SUBTOTAL — Interior",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Specialty",
+      "id": "specialty_courtyard_landscape_phase_1",
+      "label": "Courtyard Landscape - Phase 1",
+      "low": 10000,
+      "mid": 20000,
+      "high": 42000,
+      "p2_low": 12000,
+      "p2_mid": 25000,
+      "p2_high": 50000,
+      "notes": "Feature-based — not house sqft. Water features, plantings, rock garden."
+    },
+    {
+      "section": "Specialty",
+      "id": "specialty_gym_shared_space_fit_out",
+      "label": "Gym / Shared Space Fit-out",
+      "low": 15000,
+      "mid": 30000,
+      "high": 60000,
+      "p2_low": 0,
+      "p2_mid": 0,
+      "p2_high": 0,
+      "notes": "Scope-dependent — not house sqft. Built in Phase 1 shared space. Flooring, mirrors, equipment — scope TBD."
+    },
+    {
+      "section": "Specialty",
+      "id": "specialty_subtotal_specialty",
+      "label": "SUBTOTAL — Specialty",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Remobilization",
+      "id": "remobilization_contractor_remobilization_premium",
+      "label": "Contractor Remobilization Premium",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Phase 2 cost — overhead to remobilize contractor after gap. Depends on gap length and market conditions."
+    },
+    {
+      "section": "Remobilization",
+      "id": "remobilization_phase_1_protection_temporary_works",
+      "label": "Phase 1 Protection & Temporary Works",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "p2_low": 27000,
+      "p2_mid": 60000,
+      "p2_high": 120000,
+      "notes": "Phase 2 cost — sealing/protecting Phase 1 during gap, temporary cladding on Phase 2 connection wall."
+    },
+    {
+      "section": "Remobilization",
+      "id": "remobilization_subtotal_remobilization",
+      "label": "SUBTOTAL — Remobilization",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": ""
+    },
+    {
+      "section": "Gap Costs",
+      "id": "gap_costs_phase_1_carrying_costs_during_gap",
+      "label": "Phase 1 Carrying Costs During Gap",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Mortgage / loan interest during gap between Phase 1 completion and Phase 2 start. Depends on gap length (BUDGET: phase_gap_modular_only) and permanent loan terms."
+    },
+    {
+      "section": "Gap Costs",
+      "id": "gap_costs_total_phase_1",
+      "label": "TOTAL PHASE 1",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Gap Costs",
+      "id": "gap_costs_total_phase_2_incl_remobilization",
+      "label": "TOTAL PHASE 2 (incl. Remobilization)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Gap Costs",
+      "id": "gap_costs_grand_total_modular_all_in",
+      "label": "GRAND TOTAL — MODULAR ALL-IN",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    }
+  ],
+  "_meta": {
+    "last_pulled": "2026-05-20T19:11:49.008371",
+    "last_pushed": null
+  }
+}

@@ -20,7 +20,8 @@ from project_config import (
     get_project_dir, load_project, load_config, load_input_map, load_row_map,
     get_scenario_row_map_key,
 )
-from formula_engine import is_formula_item
+from formula_engine import is_formula_item, get_formula_expr_updates
+from validate import validate_row_map
 
 
 def fmt_currency(v):
@@ -58,12 +59,16 @@ def push_inputs(service, spreadsheet_id, project, input_map, project_dir, dry_ru
 
 
 def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_key, dry_run,
-                   is_multiphase=False, notes_col=None):
+                   is_multiphase=False, notes_col=None, input_map=None, inp_tab="BUDGET"):
     with open(json_path) as f:
         data = json.load(f)
 
     items = data[phase_key]["line_items"] if phase_key else data["line_items"]
     items_by_id = {item["id"]: item for item in items}
+
+    # Validate row_map against the live sheet before writing anything
+    if service is not None:
+        validate_row_map(service, spreadsheet_id, tab_name, row_map, items_by_id, abort=True)
 
     # Notes column: explicit config overrides default (I for multiphase, F for single-phase)
     if notes_col is None:
@@ -71,6 +76,7 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
     notes_col_letter = notes_col
 
     updates = []
+    formula_updates = []  # written with USER_ENTERED so Sheets interprets '=' as formula
     skipped = []
 
     for item_id, row_1idx in sorted(row_map.items(), key=lambda x: x[1]):
@@ -86,8 +92,13 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
                     "range": f"{tab_name}!{notes_col_letter}{row_1idx}",
                     "values": [[note]],
                 })
+            # Write formula_expr cells (git-tracked formulas, restored on every push)
+            if input_map and item.get("formula_expr"):
+                formula_updates.extend(
+                    get_formula_expr_updates(item, row_1idx, tab_name, input_map, inp_tab)
+                )
             # Formula Phase 1 items may still carry editable Phase 2 data
-            if notes_col and notes_col != "F":
+            if notes_col and notes_col != "F" and not item.get("formula_expr"):
                 p2 = [fmt_currency(item.get("p2_low")),
                       fmt_currency(item.get("p2_mid")),
                       fmt_currency(item.get("p2_high"))]
@@ -171,13 +182,16 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
                     })
 
     if dry_run:
-        print(f"  [dry-run] Would write {len(updates)} rows to {tab_name} "
+        print(f"  [dry-run] Would write {len(updates)} value cells + "
+              f"{len(formula_updates)} formula cells to {tab_name} "
               f"(skipped {len(skipped)} formula rows)")
         return
 
     if updates:
         batch_write(service, spreadsheet_id, updates)
-    print(f"  Pushed {len(updates)} rows to {tab_name} "
+    if formula_updates:
+        batch_write(service, spreadsheet_id, formula_updates, value_input_option="USER_ENTERED")
+    print(f"  Pushed {len(updates)} value cells + {len(formula_updates)} formula cells to {tab_name} "
           f"(skipped {len(skipped)} formula rows)")
 
 
@@ -301,20 +315,23 @@ def main():
         json_path = os.path.join(project_dir, scenario["json_file"])
         is_mp = bool(scenario.get("phases"))
 
+        inp_tab = project["tabs"]["inputs"]
         if not is_mp:
             print(f"Pushing {scenario['tab']} tab...")
             rm_key = get_scenario_row_map_key(scenario)
             push_scenario(service, spreadsheet_id, scenario["tab"],
                           row_map.get(rm_key, {}), json_path, phase_key=None,
                           dry_run=args.dry_run, is_multiphase=False,
-                          notes_col=scenario.get("notes_col"))
+                          notes_col=scenario.get("notes_col"),
+                          input_map=input_map, inp_tab=inp_tab)
         else:
             for phase in scenario["phases"]:
                 print(f"Pushing {scenario['tab']} tab ({phase})...")
                 rm_key = get_scenario_row_map_key(scenario, phase)
                 push_scenario(service, spreadsheet_id, scenario["tab"],
                               row_map.get(rm_key, {}), json_path, phase_key=phase,
-                              dry_run=args.dry_run, is_multiphase=True)
+                              dry_run=args.dry_run, is_multiphase=True,
+                              input_map=input_map, inp_tab=inp_tab)
 
     print(f"Pushing {project['tabs']['kanban']} tab...")
     push_kanban(service, spreadsheet_id, project, project_dir, args.dry_run)

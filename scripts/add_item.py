@@ -21,7 +21,7 @@ import json
 import argparse
 
 sys.path.insert(0, os.path.dirname(__file__))
-from sheets_client import get_service, get_sheet_id, batch_write
+from sheets_client import get_service, get_sheet_id, batch_write, read_range
 from project_config import (
     get_project_dir, load_project, load_config, load_row_map, save_row_map,
     get_scenario_row_map_key,
@@ -131,6 +131,20 @@ def do_add(service, spreadsheet_id, after_id, new_id, scenario, project_dir, rm)
         sys.exit(1)
 
     after_row = rm[rm_key][after_id]
+
+    # Pre-flight: confirm the sheet label at after_row matches what row_map expects
+    label_data = read_range(service, spreadsheet_id, f"{tab_name}!B{after_row}")
+    actual_label = label_data[0][0] if label_data and label_data[0] else "(empty)"
+    after_item, _ = load_item_from_json(project_dir, scenario, after_id)
+    expected_label = after_item.get("label", "") if after_item else ""
+    if expected_label and actual_label.strip() != expected_label.strip():
+        print(f"  ERROR: row_map drift detected!")
+        print(f"    row_map: '{after_id}' → row {after_row}")
+        print(f"    Sheet row {after_row} label: '{actual_label}'")
+        print(f"    Expected label:              '{expected_label}'")
+        print(f"  Fix row_map.json before running add_item.py.")
+        sys.exit(1)
+    print(f"  Pre-flight OK: row {after_row} = '{actual_label}'")
     print(f"  Inserting row after '{after_id}' (row {after_row})...")
 
     sheet_id = get_sheet_id(service, spreadsheet_id, tab_name)

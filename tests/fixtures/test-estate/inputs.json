@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "last_pulled": null,
+    "last_pushed": null
+  },
+  "project": {
+    "name": "Test Estate",
+    "target_location": "Example County, MI"
+  },
+  "land_acquisition": {
+    "closing_costs": 0.02
+  },
+  "construction": {
+    "target_square_footage": 3200,
+    "sqft_phase1": 1400,
+    "sqft_phase2": 1800,
+    "cost_sq_ft_low": 350,
+    "cost_sq_ft_mid": 450,
+    "cost_sq_ft_high": 550,
+    "rate_foundation_crawl_low": 17,
+    "rate_foundation_crawl_mid": 25,
+    "rate_foundation_crawl_high": 38,
+    "rate_foundation_slab_low": 13,
+    "rate_foundation_slab_mid": 20,
+    "rate_foundation_slab_high": 31,
+    "rate_framing_low": 31,
+    "rate_framing_mid": 63,
+    "rate_framing_high": 94,
+    "rate_roofing_low": 13,
+    "rate_roofing_mid": 20,
+    "rate_roofing_high": 31,
+    "rate_ext_cladding_low": 17,
+    "rate_ext_cladding_mid": 30,
+    "rate_ext_cladding_high": 48,
+    "rate_windows_doors_low": 20,
+    "rate_windows_doors_mid": 33,
+    "rate_windows_doors_high": 52,
+    "rate_hvac_low": 14,
+    "rate_hvac_mid": 22,
+    "rate_hvac_high": 34,
+    "rate_electrical_low": 14,
+    "rate_electrical_mid": 22,
+    "rate_electrical_high": 34,
+    "rate_plumbing_low": 16,
+    "rate_plumbing_mid": 25,
+    "rate_plumbing_high": 39,
+    "rate_drywall_low": 8,
+    "rate_drywall_mid": 13,
+    "rate_drywall_high": 21,
+    "rate_flooring_low": 14,
+    "rate_flooring_mid": 23,
+    "rate_flooring_high": 39,
+    "rate_paint_low": 5,
+    "rate_paint_mid": 9,
+    "rate_paint_high": 16,
+    "rate_trim_millwork_low": 8,
+    "rate_trim_millwork_mid": 14,
+    "rate_trim_millwork_high": 28,
+    "rate_lighting_low": 6,
+    "rate_lighting_mid": 13,
+    "rate_lighting_high": 27,
+    "rate_ventilation_low": 3,
+    "rate_ventilation_mid": 5,
+    "rate_ventilation_high": 8,
+    "rate_insulation_low": null,
+    "rate_insulation_mid": null,
+    "rate_insulation_high": null
+  },
+  "financing": {
+    "construction_loan_rate": 0.075,
+    "construction_loan_ltv": 0.8,
+    "permanent_loan_rate": 0.065,
+    "permanent_loan_term": 30,
+    "construction_duration": 18,
+    "phase_gap_modular_only": 36
+  },
+  "soft_costs": {
+    "architect_fee": 0.08,
+    "engineering_civil_structural": 0.03,
+    "permits_fees_flat": 25000,
+    "survey_geotech_flat": 15000,
+    "legal_miscellaneous_flat": 10000
+  },
+  "contingency": {
+    "sitework_contingency": 0.1,
+    "construction_contingency": 0.1,
+    "owner_change_reserve": 0.05,
+    "design_contingency": 0.05
+  },
+  "borrower": {
+    "gross_annual_income": 150000,
+    "monthly_debt": 0,
+    "credit_score": 750,
+    "dti_ceiling": 0.43
+  },
+  "equity": {
+    "down_payment_pool": 200000,
+    "investor_count": "Equity only — no co-borrowers, no rental income",
+    "structure": null
+  }
+}

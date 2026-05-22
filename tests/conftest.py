@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import pytest
+from unittest.mock import MagicMock
 
 # Make scripts/ importable without installing the package
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
@@ -205,3 +206,104 @@ def sample_inputs():
 @pytest.fixture
 def sample_scenario():
     return SAMPLE_SCENARIO
+
+
+# ---------------------------------------------------------------------------
+# Test-estate fixture directory (sanitized project — safe to commit)
+# ---------------------------------------------------------------------------
+
+FIXTURES_DIR = os.path.join(os.path.dirname(__file__), "fixtures", "test-estate")
+
+
+@pytest.fixture
+def test_estate_dir():
+    """Absolute path to the sanitized test-estate fixture directory."""
+    return FIXTURES_DIR
+
+
+@pytest.fixture
+def mock_service():
+    """
+    MagicMock that mimics a Google Sheets API service object.
+
+    Chains all chained calls back to itself so the common access pattern
+    svc.spreadsheets().values().get().execute() resolves without error.
+    Tests that need a specific execute() return value should configure it:
+        mock_service.execute.return_value = {"values": [["row1col1"]]}
+    """
+    svc = MagicMock()
+    svc.spreadsheets.return_value = svc
+    svc.values.return_value = svc
+    svc.get.return_value = svc
+    svc.batchUpdate.return_value = svc
+    svc.batchClear.return_value = svc
+    svc.execute.return_value = {"values": []}
+    return svc
+
+
+@pytest.fixture
+def sample_formula_expr_item():
+    """An item with formula_expr for both Phase 1 and Phase 2 — mirrors MODULAR framing."""
+    return {
+        "section": "Structure",
+        "id": "structure_framing_phase_1",
+        "label": "Framing - Phase 1",
+        "low": None, "mid": None, "high": None,
+        "p2_low": None, "p2_mid": None, "p2_high": None,
+        "formula": True,
+        "formula_expr": {
+            "low":    "{construction.sqft_phase1} * {construction.rate_framing_low}",
+            "mid":    "{construction.sqft_phase1} * {construction.rate_framing_mid}",
+            "high":   "{construction.sqft_phase1} * {construction.rate_framing_high}",
+            "p2_low": "{construction.sqft_phase2} * {construction.rate_framing_low}",
+            "p2_mid": "{construction.sqft_phase2} * {construction.rate_framing_mid}",
+            "p2_high":"{construction.sqft_phase2} * {construction.rate_framing_high}",
+        },
+        "notes": "sqft_phase1 x $31-63-94/sqft | Fill BUDGET:rate_framing to adjust.",
+    }
+
+
+@pytest.fixture
+def sample_input_map_with_rates():
+    """Construction rate input_map matching the test-estate fixture input_map.json."""
+    return {
+        "construction.target_square_footage": "B17",
+        "construction.sqft_phase1": "B66",
+        "construction.sqft_phase2": "B67",
+        "construction.rate_foundation_crawl_low": "B70",
+        "construction.rate_foundation_crawl_mid": "C70",
+        "construction.rate_foundation_crawl_high": "D70",
+        "construction.rate_framing_low": "B72",
+        "construction.rate_framing_mid": "C72",
+        "construction.rate_framing_high": "D72",
+        "construction.rate_roofing_low": "B73",
+        "construction.rate_roofing_mid": "C73",
+        "construction.rate_roofing_high": "D73",
+        "construction.rate_hvac_low": "B76",
+        "construction.rate_hvac_mid": "C76",
+        "construction.rate_hvac_high": "D76",
+    }
+
+
+@pytest.fixture
+def test_spreadsheet_id():
+    """
+    Returns the test spreadsheet ID from env var or gitignored config.json.
+
+    Set up once:
+      Option A — env var:  export GRIDPILOT_TEST_SPREADSHEET_ID=your-id
+      Option B — file:     echo '{"spreadsheet_id":"your-id"}' > tests/fixtures/test-estate/config.json
+
+    Skips the test automatically when neither is configured.
+    """
+    env_id = os.environ.get("GRIDPILOT_TEST_SPREADSHEET_ID")
+    if env_id:
+        return env_id
+    cfg_path = os.path.join(FIXTURES_DIR, "config.json")
+    if os.path.exists(cfg_path):
+        with open(cfg_path) as f:
+            return json.load(f)["spreadsheet_id"]
+    pytest.skip(
+        "No test spreadsheet configured. "
+        "Set GRIDPILOT_TEST_SPREADSHEET_ID or create tests/fixtures/test-estate/config.json"
+    )

@@ -7,11 +7,15 @@ item IDs to their formula generators.
 
 To add a new formula-driven item:
   1. Add "formula": true, "low": null, "mid": null, "high": null to the JSON
-  2. Add a branch below mapping its ID to a formula tuple
+  2. Optionally add "formula_expr": {"low": "{key} * {key}", ...} for push.py to
+     write and restore the formula automatically on every push.
+  3. Or add a branch in get_formula() below for complex multi-cell formulas.
 
-The formulas reference input cells via input_map (e.g. input_map["soft_costs.architect_pct"]
-returns the cell address like "B32", which is then qualified as "{inp_tab}!B32").
+formula_expr placeholders use input_map keys wrapped in {}: e.g.
+  "{construction.sqft_phase1} * {construction.rate_framing_low}"
+resolves to "=BUDGET!B66*BUDGET!B72" via the input_map.
 """
+import re
 
 
 def cell_ref(inp_tab, input_map, key):
@@ -76,6 +80,55 @@ def get_formula(item_id, input_map, inp_tab, mid_const):
             )
 
     return None
+
+
+def resolve_formula_expr(expr, input_map, inp_tab):
+    """
+    Replace {key} placeholders with fully-qualified cell refs from input_map.
+    Returns a Sheets formula string starting with '=', or None if any key is missing.
+
+    Example:
+      "{construction.sqft_phase1} * {construction.rate_framing_low}"
+      → "=BUDGET!B66*BUDGET!B72"
+    """
+    keys = re.findall(r'\{([^}]+)\}', expr)
+    result = expr
+    for key in keys:
+        addr = input_map.get(key)
+        if not addr:
+            return None
+        qualified = addr if "!" in addr else f"{inp_tab}!{addr}"
+        result = result.replace(f"{{{key}}}", qualified)
+    return f"={result}"
+
+
+def get_formula_expr_updates(item, row_1idx, tab_name, input_map, inp_tab):
+    """
+    Build a list of {range, values} dicts for an item's formula_expr entries.
+    Write these with USER_ENTERED so Sheets interprets the '=' as a formula.
+
+    formula_expr key → column:
+      low/mid/high     → C/D/E  (Phase 1 or single-phase)
+      p2_low/mid/high  → F/G/H  (Phase 2)
+    """
+    expr_map = item.get("formula_expr", {})
+    if not expr_map:
+        return []
+
+    col_map = {
+        "low": "C", "mid": "D", "high": "E",
+        "p2_low": "F", "p2_mid": "G", "p2_high": "H",
+    }
+    updates = []
+    for key, col in col_map.items():
+        if key not in expr_map:
+            continue
+        formula = resolve_formula_expr(expr_map[key], input_map, inp_tab)
+        if formula:
+            updates.append({"range": f"{tab_name}!{col}{row_1idx}", "values": [[formula]]})
+        else:
+            print(f"  WARNING: formula_expr '{key}' for {item['id']} has unresolvable placeholder")
+    return updates
 
 
 def is_formula_item(item):

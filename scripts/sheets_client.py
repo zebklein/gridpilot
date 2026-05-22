@@ -40,6 +40,21 @@ def batch_write(service, spreadsheet_id, data, value_input_option="RAW"):
     ).execute()
 
 
+def batch_clear(service, spreadsheet_id, ranges):
+    """Clear a list of specific cell ranges without touching anything outside them."""
+    service.spreadsheets().values().batchClear(
+        spreadsheetId=spreadsheet_id,
+        body={"ranges": ranges},
+    ).execute()
+
+
+def clear_scenario_rows(service, spreadsheet_id, tab, row_map, cols="C:H"):
+    """Clear data columns only for rows tracked in row_map — never touches header/SUM rows."""
+    col_start, col_end = cols.split(":")
+    ranges = [f"{tab}!{col_start}{row}:{col_end}{row}" for row in sorted(row_map.values())]
+    batch_clear(service, spreadsheet_id, ranges)
+
+
 def batch_format(service, spreadsheet_id, requests):
     """requests: list of Sheets API format request dicts"""
     service.spreadsheets().batchUpdate(

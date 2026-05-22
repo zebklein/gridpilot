@@ -19,3 +19,6 @@ venv/
 
 # IDE and AI tool state
 .claude/
+
+# Test spreadsheet credentials (contains real spreadsheet ID)
+tests/fixtures/test-estate/config.json

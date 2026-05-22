@@ -1,0 +1,166 @@
+{
+  "spreadsheet_title": "Test Estate — Project Model",
+  "tabs": {
+    "inputs": "BUDGET",
+    "capital": "CAPITAL",
+    "kanban": "KANBAN"
+  },
+  "scenarios": [
+    {
+      "id": "one_shot",
+      "label": "ONE_SHOT",
+      "tab": "ONE_SHOT",
+      "json_file": "scenario_one_shot.json",
+      "phases": null
+    },
+    {
+      "id": "modular",
+      "label": "MODULAR",
+      "tab": "MODULAR",
+      "json_file": "scenario_modular.json",
+      "phases": null,
+      "notes_col": "I"
+    }
+  ],
+  "kanban_meta": {
+    "valid_statuses": ["New", "Active", "Complete", "Stopped"],
+    "valid_priorities": ["Critical", "High", "Medium", "Low"]
+  },
+  "inputs_sections": [
+    {
+      "id": "project",
+      "label": "PROJECT",
+      "fields": [
+        {"key": "project.name", "label": "Name", "type": "text"},
+        {"key": "project.target_location", "label": "Target Location", "type": "text"}
+      ]
+    },
+    {
+      "id": "land_acquisition",
+      "label": "LAND & ACQUISITION",
+      "fields": [
+        {"key": "land_acquisition.closing_costs", "label": "Closing Costs", "type": "percent"}
+      ]
+    },
+    {
+      "id": "construction",
+      "label": "CONSTRUCTION",
+      "fields": [
+        {"key": "construction.target_square_footage", "label": "Total Sq Footage", "type": "number"},
+        {"key": "construction.sqft_phase1", "label": "Phase 1 — Sq Footage", "type": "number"},
+        {"key": "construction.sqft_phase2", "label": "Phase 2 — Sq Footage", "type": "number"},
+        {"key": "construction.cost_sq_ft_low",  "label": "Blended Cost / Sq Ft — Low",  "type": "currency"},
+        {"key": "construction.cost_sq_ft_mid",  "label": "Blended Cost / Sq Ft — Mid",  "type": "currency"},
+        {"key": "construction.cost_sq_ft_high", "label": "Blended Cost / Sq Ft — High", "type": "currency"}
+      ]
+    },
+    {
+      "id": "construction_rates",
+      "label": "CONSTRUCTION RATES ($/sqft)",
+      "fields": [
+        {"key": "construction.rate_foundation_crawl_low",  "label": "Foundation (Crawlspace) — Low",  "type": "currency"},
+        {"key": "construction.rate_foundation_crawl_mid",  "label": "Foundation (Crawlspace) — Mid",  "type": "currency"},
+        {"key": "construction.rate_foundation_crawl_high", "label": "Foundation (Crawlspace) — High", "type": "currency"},
+        {"key": "construction.rate_foundation_slab_low",   "label": "Foundation (Slab) — Low",  "type": "currency"},
+        {"key": "construction.rate_foundation_slab_mid",   "label": "Foundation (Slab) — Mid",  "type": "currency"},
+        {"key": "construction.rate_foundation_slab_high",  "label": "Foundation (Slab) — High", "type": "currency"},
+        {"key": "construction.rate_framing_low",  "label": "Framing — Low",  "type": "currency"},
+        {"key": "construction.rate_framing_mid",  "label": "Framing — Mid",  "type": "currency"},
+        {"key": "construction.rate_framing_high", "label": "Framing — High", "type": "currency"},
+        {"key": "construction.rate_roofing_low",  "label": "Roofing — Low",  "type": "currency"},
+        {"key": "construction.rate_roofing_mid",  "label": "Roofing — Mid",  "type": "currency"},
+        {"key": "construction.rate_roofing_high", "label": "Roofing — High", "type": "currency"},
+        {"key": "construction.rate_ext_cladding_low",  "label": "Exterior Cladding — Low",  "type": "currency"},
+        {"key": "construction.rate_ext_cladding_mid",  "label": "Exterior Cladding — Mid",  "type": "currency"},
+        {"key": "construction.rate_ext_cladding_high", "label": "Exterior Cladding — High", "type": "currency"},
+        {"key": "construction.rate_windows_doors_low",  "label": "Windows & Doors — Low",  "type": "currency"},
+        {"key": "construction.rate_windows_doors_mid",  "label": "Windows & Doors — Mid",  "type": "currency"},
+        {"key": "construction.rate_windows_doors_high", "label": "Windows & Doors — High", "type": "currency"},
+        {"key": "construction.rate_hvac_low",  "label": "HVAC — Low",  "type": "currency"},
+        {"key": "construction.rate_hvac_mid",  "label": "HVAC — Mid",  "type": "currency"},
+        {"key": "construction.rate_hvac_high", "label": "HVAC — High", "type": "currency"},
+        {"key": "construction.rate_electrical_low",  "label": "Electrical — Low",  "type": "currency"},
+        {"key": "construction.rate_electrical_mid",  "label": "Electrical — Mid",  "type": "currency"},
+        {"key": "construction.rate_electrical_high", "label": "Electrical — High", "type": "currency"},
+        {"key": "construction.rate_plumbing_low",  "label": "Plumbing — Low",  "type": "currency"},
+        {"key": "construction.rate_plumbing_mid",  "label": "Plumbing — Mid",  "type": "currency"},
+        {"key": "construction.rate_plumbing_high", "label": "Plumbing — High", "type": "currency"},
+        {"key": "construction.rate_drywall_low",  "label": "Drywall — Low",  "type": "currency"},
+        {"key": "construction.rate_drywall_mid",  "label": "Drywall — Mid",  "type": "currency"},
+        {"key": "construction.rate_drywall_high", "label": "Drywall — High", "type": "currency"},
+        {"key": "construction.rate_flooring_low",  "label": "Flooring — Low",  "type": "currency"},
+        {"key": "construction.rate_flooring_mid",  "label": "Flooring — Mid",  "type": "currency"},
+        {"key": "construction.rate_flooring_high", "label": "Flooring — High", "type": "currency"},
+        {"key": "construction.rate_paint_low",  "label": "Paint — Low",  "type": "currency"},
+        {"key": "construction.rate_paint_mid",  "label": "Paint — Mid",  "type": "currency"},
+        {"key": "construction.rate_paint_high", "label": "Paint — High", "type": "currency"},
+        {"key": "construction.rate_trim_millwork_low",  "label": "Trim & Millwork — Low",  "type": "currency"},
+        {"key": "construction.rate_trim_millwork_mid",  "label": "Trim & Millwork — Mid",  "type": "currency"},
+        {"key": "construction.rate_trim_millwork_high", "label": "Trim & Millwork — High", "type": "currency"},
+        {"key": "construction.rate_lighting_low",  "label": "Lighting — Low",  "type": "currency"},
+        {"key": "construction.rate_lighting_mid",  "label": "Lighting — Mid",  "type": "currency"},
+        {"key": "construction.rate_lighting_high", "label": "Lighting — High", "type": "currency"},
+        {"key": "construction.rate_ventilation_low",  "label": "Ventilation/ERV — Low",  "type": "currency"},
+        {"key": "construction.rate_ventilation_mid",  "label": "Ventilation/ERV — Mid",  "type": "currency"},
+        {"key": "construction.rate_ventilation_high", "label": "Ventilation/ERV — High", "type": "currency"},
+        {"key": "construction.rate_insulation_low",  "label": "Insulation — Low",  "type": "currency"},
+        {"key": "construction.rate_insulation_mid",  "label": "Insulation — Mid",  "type": "currency"},
+        {"key": "construction.rate_insulation_high", "label": "Insulation — High", "type": "currency"}
+      ]
+    },
+    {
+      "id": "financing",
+      "label": "FINANCING",
+      "fields": [
+        {"key": "financing.construction_loan_rate", "label": "Construction Loan Rate", "type": "percent"},
+        {"key": "financing.construction_loan_ltv",  "label": "Construction Loan LTV",  "type": "percent"},
+        {"key": "financing.permanent_loan_rate",    "label": "Permanent Loan Rate",    "type": "percent"},
+        {"key": "financing.permanent_loan_term",    "label": "Permanent Loan Term",    "type": "number"},
+        {"key": "financing.construction_duration",  "label": "Construction Duration",  "type": "number"},
+        {"key": "financing.phase_gap_modular_only", "label": "Phase Gap (Modular Only)", "type": "number"}
+      ]
+    },
+    {
+      "id": "soft_costs",
+      "label": "SOFT COSTS",
+      "fields": [
+        {"key": "soft_costs.architect_fee",               "label": "Architect Fee",               "type": "percent"},
+        {"key": "soft_costs.engineering_civil_structural", "label": "Engineering (Civil + Structural)", "type": "percent"},
+        {"key": "soft_costs.permits_fees_flat",           "label": "Permits & Fees (Flat)",       "type": "currency"},
+        {"key": "soft_costs.survey_geotech_flat",         "label": "Survey & Geotech (Flat)",     "type": "currency"},
+        {"key": "soft_costs.legal_miscellaneous_flat",    "label": "Legal & Miscellaneous (Flat)","type": "currency"}
+      ]
+    },
+    {
+      "id": "contingency",
+      "label": "CONTINGENCY",
+      "fields": [
+        {"key": "contingency.sitework_contingency",    "label": "Sitework Contingency",    "type": "percent"},
+        {"key": "contingency.construction_contingency","label": "Construction Contingency","type": "percent"},
+        {"key": "contingency.owner_change_reserve",   "label": "Owner Change Reserve",    "type": "percent"},
+        {"key": "contingency.design_contingency",     "label": "Design Contingency",      "type": "percent"}
+      ]
+    },
+    {
+      "id": "borrower",
+      "label": "BORROWER PROFILE",
+      "tab": "CAPITAL",
+      "fields": [
+        {"key": "borrower.gross_annual_income", "label": "Gross Annual Income",       "type": "currency"},
+        {"key": "borrower.monthly_debt",        "label": "Monthly Debt Obligations",  "type": "currency"},
+        {"key": "borrower.credit_score",        "label": "Credit Score",              "type": "number"},
+        {"key": "borrower.dti_ceiling",         "label": "DTI Ceiling",               "type": "percent"}
+      ]
+    },
+    {
+      "id": "equity",
+      "label": "EQUITY",
+      "tab": "CAPITAL",
+      "fields": [
+        {"key": "equity.down_payment_pool", "label": "Down Payment Pool", "type": "currency"},
+        {"key": "equity.investor_count",    "label": "Investor Count",    "type": "number"},
+        {"key": "equity.structure",         "label": "Structure",         "type": "text"}
+      ]
+    }
+  ]
+}

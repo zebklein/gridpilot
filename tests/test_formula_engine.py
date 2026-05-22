@@ -1,5 +1,8 @@
 import pytest
-from formula_engine import is_formula_item, cell_ref, get_formula
+from formula_engine import (
+    is_formula_item, cell_ref, get_formula,
+    resolve_formula_expr, get_formula_expr_updates,
+)
 
 
 class TestIsFormulaItem:
@@ -89,3 +92,113 @@ class TestGetFormula:
         p1 = self._formula("soft_loan_fees")
         p2 = self._formula("soft_loan_fees_p2")
         assert p1 == p2
+
+
+class TestResolveFormulaExpr:
+    INPUT_MAP = {
+        "construction.sqft_phase1": "B66",
+        "construction.sqft_phase2": "B67",
+        "construction.rate_framing_low": "B72",
+        "construction.rate_framing_mid": "C72",
+        "construction.rate_framing_high": "D72",
+        "borrower.gross_annual_income": "CAPITAL!B4",
+    }
+    TAB = "BUDGET"
+
+    def _resolve(self, expr):
+        return resolve_formula_expr(expr, self.INPUT_MAP, self.TAB)
+
+    def test_single_placeholder_resolves(self):
+        result = self._resolve("{construction.sqft_phase1}")
+        assert result == "=BUDGET!B66"
+
+    def test_multiple_placeholders_all_resolved(self):
+        result = self._resolve(
+            "{construction.sqft_phase1} * {construction.rate_framing_low}"
+        )
+        # Whitespace from the template is preserved; both refs must appear
+        assert result is not None
+        assert "BUDGET!B66" in result
+        assert "BUDGET!B72" in result
+        assert result.startswith("=")
+
+    def test_missing_key_returns_none(self):
+        result = self._resolve("{construction.unknown_key}")
+        assert result is None
+
+    def test_already_qualified_addr_not_double_tagged(self):
+        # "CAPITAL!B4" already has a "!" — should NOT become "BUDGET!CAPITAL!B4"
+        result = self._resolve("{borrower.gross_annual_income}")
+        assert result == "=CAPITAL!B4"
+        assert "BUDGET!CAPITAL" not in result
+
+    def test_empty_expr_returns_equals_sign(self):
+        result = self._resolve("")
+        assert result == "="
+
+    def test_result_starts_with_equals(self):
+        result = self._resolve("{construction.sqft_phase1}")
+        assert result is not None
+        assert result.startswith("=")
+
+
+class TestGetFormulaExprUpdates:
+    INPUT_MAP = {
+        "construction.sqft_phase1": "B66",
+        "construction.sqft_phase2": "B67",
+        "construction.rate_framing_low": "B72",
+        "construction.rate_framing_mid": "C72",
+        "construction.rate_framing_high": "D72",
+    }
+    TAB = "MODULAR"
+    INP_TAB = "BUDGET"
+
+    def _updates(self, item, row=46):
+        return get_formula_expr_updates(item, row, self.TAB, self.INPUT_MAP, self.INP_TAB)
+
+    def test_no_formula_expr_returns_empty(self):
+        item = {"id": "some_item", "formula": True, "low": None, "mid": None, "high": None}
+        assert self._updates(item) == []
+
+    def test_p1_only_returns_three_updates(self):
+        item = {
+            "id": "structure_framing_phase_1",
+            "formula": True,
+            "formula_expr": {
+                "low":  "{construction.sqft_phase1} * {construction.rate_framing_low}",
+                "mid":  "{construction.sqft_phase1} * {construction.rate_framing_mid}",
+                "high": "{construction.sqft_phase1} * {construction.rate_framing_high}",
+            },
+        }
+        updates = self._updates(item, row=46)
+        assert len(updates) == 3
+        ranges = {u["range"] for u in updates}
+        assert "MODULAR!C46" in ranges
+        assert "MODULAR!D46" in ranges
+        assert "MODULAR!E46" in ranges
+
+    def test_p1_and_p2_returns_six_updates(self, sample_formula_expr_item):
+        updates = self._updates(sample_formula_expr_item, row=46)
+        assert len(updates) == 6
+        ranges = {u["range"] for u in updates}
+        for col in "CDEFGH":
+            assert f"MODULAR!{col}46" in ranges
+
+    def test_all_values_are_formula_strings(self, sample_formula_expr_item):
+        updates = self._updates(sample_formula_expr_item, row=46)
+        for u in updates:
+            val = u["values"][0][0]
+            assert val.startswith("="), f"Expected formula string, got: {val}"
+
+    def test_missing_key_warns_and_skips(self, capsys):
+        item = {
+            "id": "bad_item",
+            "formula": True,
+            "formula_expr": {
+                "low": "{construction.sqft_phase1} * {construction.rate_nonexistent}",
+            },
+        }
+        updates = self._updates(item, row=10)
+        assert len(updates) == 0
+        captured = capsys.readouterr()
+        assert "WARNING" in captured.out

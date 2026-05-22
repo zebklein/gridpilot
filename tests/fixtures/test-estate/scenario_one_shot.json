@@ -1,0 +1,891 @@
+{
+  "line_items": [
+    {
+      "section": "Land & Acq.",
+      "id": "land_acq_land_purchase_price",
+      "label": "Land Purchase Price",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "From INPUTS tab",
+      "formula": true
+    },
+    {
+      "section": "Land & Acq.",
+      "id": "land_acq_closing_costs",
+      "label": "Closing Costs",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Purchase Price × Closing %",
+      "formula": true
+    },
+    {
+      "section": "Land & Acq.",
+      "id": "land_acq_subtotal_land_acquisition",
+      "label": "SUBTOTAL — Land & Acquisition",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_boundary_topo_survey",
+      "label": "Boundary & Topo Survey",
+      "low": 8000,
+      "mid": 12000,
+      "high": 20000,
+      "notes": "Flat cost — lot size / complexity dependent, not sqft of house"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_wetland_delineation",
+      "label": "Wetland Delineation",
+      "low": 3000,
+      "mid": 6000,
+      "high": 12000,
+      "notes": "Skip if site is clearly upland. Flat cost — lot-size dependent."
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_perc_test_soil_evaluation",
+      "label": "Perc Test & Soil Evaluation",
+      "low": 3000,
+      "mid": 5000,
+      "high": 10000,
+      "notes": "Flat cost — site dependent"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_well_septic_feasibility_study",
+      "label": "Well / Septic Feasibility Study",
+      "low": 2000,
+      "mid": 4000,
+      "high": 8000,
+      "notes": "Flat cost — site dependent"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_environmental_review",
+      "label": "Environmental Review",
+      "low": 0,
+      "mid": 5000,
+      "high": 15000,
+      "notes": "Only if prior industrial or agricultural use is suspected"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_title_easement_legal_review",
+      "label": "Title, Easement & Legal Review",
+      "low": 2000,
+      "mid": 4000,
+      "high": 8000,
+      "notes": "Flat cost — transaction complexity dependent"
+    },
+    {
+      "section": "Due Diligence",
+      "id": "due_diligence_subtotal_due_diligence",
+      "label": "SUBTOTAL — Due Diligence",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_architect",
+      "label": "Architect",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Calculated from INPUTS: architect_pct x construction mid estimate",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_civil_structural_engineering",
+      "label": "Civil + Structural Engineering",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Calculated from INPUTS: engineering_pct x construction mid estimate",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_septic_designer",
+      "label": "Septic Designer",
+      "low": 3000,
+      "mid": 5000,
+      "high": 10000,
+      "notes": "Flat cost — system complexity dependent"
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_permits_fees",
+      "label": "Permits & Fees",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Pulled from INPUTS: permits_fees_flat",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_survey_geotechnical",
+      "label": "Survey & Geotechnical",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Pulled from INPUTS: survey_geotech_flat",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_legal_miscellaneous",
+      "label": "Legal & Miscellaneous",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Pulled from INPUTS: legal_misc_flat",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_construction_loan_fees",
+      "label": "Construction Loan Fees",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Calculated: ~1.5% of loan amount",
+      "formula": true
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_builder_s_risk_insurance",
+      "label": "Builder's Risk Insurance",
+      "low": 8000,
+      "mid": 15000,
+      "high": 25000,
+      "notes": "During construction period. Flat cost — project value dependent."
+    },
+    {
+      "section": "Soft Costs",
+      "id": "soft_costs_subtotal_soft_costs",
+      "label": "SUBTOTAL — Soft Costs",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_land_clearing_grading",
+      "label": "Land Clearing & Grading",
+      "low": 30000,
+      "mid": 55000,
+      "high": 90000,
+      "notes": "Lot-size dependent — not house sqft. Assumes ~3 usable acres with partial clearing."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_driveway",
+      "label": "Driveway",
+      "low": 15000,
+      "mid": 30000,
+      "high": 60000,
+      "notes": "Driveway length dependent — not house sqft. Assume long private drive to road."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_drainage_stormwater_management",
+      "label": "Drainage & Stormwater Management",
+      "low": 10000,
+      "mid": 20000,
+      "high": 40000,
+      "notes": "Lot-size and topography dependent — not house sqft"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_excavation",
+      "label": "Excavation",
+      "low": 15000,
+      "mid": 25000,
+      "high": 45000,
+      "notes": "Footprint-proportional. Scales with sqft_total via foundation footprint."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_erosion_control",
+      "label": "Erosion Control",
+      "low": 5000,
+      "mid": 8000,
+      "high": 15000,
+      "notes": "Lot-size dependent — not house sqft"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_utility_trenching",
+      "label": "Utility Trenching",
+      "low": 8000,
+      "mid": 15000,
+      "high": 30000,
+      "notes": "Distance to road / utilities dependent — not house sqft"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_well_drilled",
+      "label": "Well (Drilled)",
+      "low": 12000,
+      "mid": 20000,
+      "high": 35000,
+      "notes": "If no municipal water available. Flat cost — depth / geology dependent."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_septic_tank_field",
+      "label": "Septic (Tank + Field)",
+      "low": 20000,
+      "mid": 35000,
+      "high": 60000,
+      "notes": "Bedroom count dependent, not house sqft directly. Size to full bedroom count."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_electric_service",
+      "label": "Electric Service",
+      "low": 8000,
+      "mid": 15000,
+      "high": 30000,
+      "notes": "Distance to utility pole dependent — not house sqft"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_propane_gas",
+      "label": "Propane / Gas",
+      "low": 5000,
+      "mid": 10000,
+      "high": 20000,
+      "notes": "Flat cost — tank size and distance dependent"
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_internet_fiber",
+      "label": "Internet / Fiber",
+      "low": 2000,
+      "mid": 8000,
+      "high": 25000,
+      "notes": "Verify availability before land purchase. Distance dependent."
+    },
+    {
+      "section": "Site Work",
+      "id": "site_work_subtotal_site_work",
+      "label": "SUBTOTAL — Site Work",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Foundation",
+      "id": "foundation_conditioned_crawlspace",
+      "label": "Conditioned Crawlspace",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $17-25-38/sqft | Preferred for Minka layout — allows sub-floor HVAC and plumbing access. Fill BUDGET:rate_foundation_crawl to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_foundation_crawl_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_foundation_crawl_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_foundation_crawl_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Foundation",
+      "id": "foundation_slab_on_grade",
+      "label": "Slab on Grade",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $13-20-31/sqft | Lower cost; limits sub-floor mechanical access. Fill BUDGET:rate_foundation_slab to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_foundation_slab_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_foundation_slab_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_foundation_slab_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Foundation",
+      "id": "foundation_subtotal_foundation",
+      "label": "SUBTOTAL — Foundation",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Structure",
+      "id": "structure_framing_minka_style_complex_roof",
+      "label": "Framing (Minka-Style Complex Roof)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $31-63-94/sqft | Complex roofline premium vs. standard gable. Fill BUDGET:rate_framing to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_framing_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_framing_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_framing_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_roofing",
+      "label": "Roofing",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $13-20-31/sqft | Fill BUDGET:rate_roofing to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_roofing_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_roofing_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_roofing_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_insulation",
+      "label": "Insulation (Batt + Spray Foam)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × BUDGET:rate_insulation | Fill BUDGET rate to compute. Spray foam in crawlspace/attic; batt in walls.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_insulation_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_insulation_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_insulation_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_exterior_cladding_stone_wood_siding",
+      "label": "Exterior Cladding (Stone, Wood, Siding)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $17-30-48/sqft | Mixed materials for Minka character. Fill BUDGET:rate_ext_cladding to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_ext_cladding_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_ext_cladding_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_ext_cladding_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_windows_exterior_doors",
+      "label": "Windows & Exterior Doors",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $20-33-52/sqft | High quality, abundant glazing per design intent. Fill BUDGET:rate_windows_doors to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_windows_doors_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_windows_doors_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_windows_doors_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Structure",
+      "id": "structure_garage_attached_optional_detached",
+      "label": "Garage (Attached + Optional Detached)",
+      "low": 30000,
+      "mid": 50000,
+      "high": 65000,
+      "notes": "Feature-based — not directly proportional to house sqft. Pavers, drainage, structural courtyard elements."
+    },
+    {
+      "section": "Structure",
+      "id": "structure_courtyard_hardscape",
+      "label": "Courtyard Hardscape",
+      "low": 0,
+      "mid": 0,
+      "high": 0,
+      "notes": "SQFT × BUDGET:rate_insulation | Fill BUDGET rate to compute. Spray foam in crawlspace/attic; batt in walls."
+    },
+    {
+      "section": "Structure",
+      "id": "structure_decks_porches",
+      "label": "Decks & Porches",
+      "low": 15000,
+      "mid": 30000,
+      "high": 65000,
+      "notes": "Deck sqft dependent — not house sqft directly. Scale with outdoor living scope."
+    },
+    {
+      "section": "Structure",
+      "id": "structure_subtotal_structure",
+      "label": "SUBTOTAL — Structure",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "MEP",
+      "id": "mep_hvac_multi_zone_high_efficiency",
+      "label": "HVAC (Multi-Zone, High-Efficiency)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $14-22-34/sqft | Multiple zones for independent suites. Fill BUDGET:rate_hvac to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_hvac_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_hvac_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_hvac_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_electrical",
+      "label": "Electrical",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $14-22-34/sqft | Single meter, multiple sub-panels for suites. Fill BUDGET:rate_electrical to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_electrical_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_electrical_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_electrical_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_plumbing_multiple_kitchens_baths",
+      "label": "Plumbing (Multiple Kitchens & Baths)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $16-25-39/sqft | Cost sensitive to kitchen count — rate reflects multi-kitchen premium. Fill BUDGET:rate_plumbing to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_plumbing_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_plumbing_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_plumbing_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_water_treatment_system",
+      "label": "Water Treatment System",
+      "low": 4000,
+      "mid": 10000,
+      "high": 22000,
+      "notes": "If on well. Flat cost — capacity / treatment type dependent."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_fireplaces_2_3",
+      "label": "Fireplaces (2-3)",
+      "low": 10000,
+      "mid": 18000,
+      "high": 35000,
+      "notes": "Unit-count dependent — not house sqft. Budget per unit: ~$5-12k gas/electric, $12-20k wood/gas insert."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_ventilation_erv",
+      "label": "Ventilation / ERV",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $3-5-8/sqft | Whole-house ERV. Fill BUDGET:rate_ventilation to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_ventilation_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_ventilation_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_ventilation_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "MEP",
+      "id": "mep_smart_home_low_voltage_av",
+      "label": "Smart Home / Low-Voltage / AV",
+      "low": 0,
+      "mid": 28000,
+      "high": 65000,
+      "notes": "Scope-dependent — not directly proportional to sqft. Wide range based on technology choices."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_backup_power_generator",
+      "label": "Backup Power / Generator",
+      "low": 0,
+      "mid": 22000,
+      "high": 45000,
+      "notes": "Flat cost — capacity dependent. Standby generator sized for critical loads."
+    },
+    {
+      "section": "MEP",
+      "id": "mep_subtotal_mep",
+      "label": "SUBTOTAL — MEP",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Interior",
+      "id": "interior_drywall_plaster",
+      "label": "Drywall & Plaster",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $8-13-21/sqft | Fill BUDGET:rate_drywall to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_drywall_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_drywall_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_drywall_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_flooring_hardwood_tile_tatami",
+      "label": "Flooring (Hardwood, Tile, Tatami)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $14-23-39/sqft | Mixed materials per suite character. Fill BUDGET:rate_flooring to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_flooring_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_flooring_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_flooring_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_paint",
+      "label": "Paint",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $5-9-16/sqft | Fill BUDGET:rate_paint to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_paint_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_paint_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_paint_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_trim_millwork",
+      "label": "Trim & Millwork",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $8-14-28/sqft | Fill BUDGET:rate_trim_millwork to adjust.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_trim_millwork_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_trim_millwork_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_trim_millwork_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_cabinetry",
+      "label": "Cabinetry",
+      "low": 32000,
+      "mid": 58000,
+      "high": 100000,
+      "notes": "Kitchen/bath count dependent — not directly sqft. Scale with kitchen and bath unit count."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_kitchens_multiple_up_to_4_units",
+      "label": "Kitchens (Multiple - Up to 4 Units)",
+      "low": 65000,
+      "mid": 115000,
+      "high": 185000,
+      "notes": "Unit-count dependent — not house sqft. Count TBD. Primary driver of plumbing and zoning risk."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_bathrooms_6_8_baths",
+      "label": "Bathrooms (6-8 Baths)",
+      "low": 65000,
+      "mid": 115000,
+      "high": 185000,
+      "notes": "Unit-count dependent — not house sqft. Budget ~$10-25k/bath depending on finish level."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_library_millwork",
+      "label": "Library Millwork",
+      "low": 25000,
+      "mid": 50000,
+      "high": 100000,
+      "notes": "Feature-based — not house sqft. May be phased; rough-in only in Phase 1 if deferred."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_lighting_fixtures",
+      "label": "Lighting (Fixtures)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "3,200 sqft × $6-13-27/sqft | Fill BUDGET:rate_lighting to adjust. Wide range reflects fixture quality choices.",
+      "formula": true,
+      "formula_expr": {
+        "low":  "{construction.target_square_footage} * {construction.rate_lighting_low}",
+        "mid":  "{construction.target_square_footage} * {construction.rate_lighting_mid}",
+        "high": "{construction.target_square_footage} * {construction.rate_lighting_high}"
+      },
+      "p2_low": null,
+      "p2_mid": null,
+      "p2_high": null
+    },
+    {
+      "section": "Interior",
+      "id": "interior_appliances",
+      "label": "Appliances",
+      "low": 25000,
+      "mid": 45000,
+      "high": 90000,
+      "notes": "Unit-count dependent — not house sqft. Scale with kitchen count and appliance spec level."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_built_ins_custom_shelving",
+      "label": "Built-ins & Custom Shelving",
+      "low": 15000,
+      "mid": 32000,
+      "high": 65000,
+      "notes": "Scope-dependent — not directly sqft. Scales loosely with suite count."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_japanese_architectural_finishes",
+      "label": "Japanese Architectural Finishes",
+      "low": 25000,
+      "mid": 50000,
+      "high": 100000,
+      "notes": "Feature-based — not house sqft. Shoji, fusuma, specialty joinery, tatami elements."
+    },
+    {
+      "section": "Interior",
+      "id": "interior_subtotal_interior",
+      "label": "SUBTOTAL — Interior",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Specialty",
+      "id": "specialty_courtyard_landscape_feature_elements",
+      "label": "Courtyard Landscape & Feature Elements",
+      "low": 20000,
+      "mid": 50000,
+      "high": 100000,
+      "notes": "Feature-based — not house sqft. Water features, mature plantings, rock garden."
+    },
+    {
+      "section": "Specialty",
+      "id": "specialty_gym_shared_space_fit_out",
+      "label": "Gym / Shared Space Fit-out",
+      "low": 15000,
+      "mid": 30000,
+      "high": 60000,
+      "notes": "Scope-dependent — not house sqft. Flooring, mirrors, equipment — scope TBD."
+    },
+    {
+      "section": "Specialty",
+      "id": "specialty_subtotal_specialty",
+      "label": "SUBTOTAL — Specialty",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Specialty",
+      "id": "specialty_hard_cost_subtotal_excl_land_due_dil_soft",
+      "label": "HARD COST SUBTOTAL (Excl. Land, Due Dil., Soft)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Contingency",
+      "id": "contingency_sitework_contingency",
+      "label": "Sitework Contingency",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "From INPUTS rates",
+      "formula": true
+    },
+    {
+      "section": "Contingency",
+      "id": "contingency_construction_contingency",
+      "label": "Construction Contingency",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "From INPUTS rates",
+      "formula": true
+    },
+    {
+      "section": "Contingency",
+      "id": "contingency_owner_change_reserve",
+      "label": "Owner Change Reserve",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "From INPUTS rates",
+      "formula": true
+    },
+    {
+      "section": "Contingency",
+      "id": "contingency_design_contingency",
+      "label": "Design Contingency",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "From INPUTS rates",
+      "formula": true
+    },
+    {
+      "section": "Contingency",
+      "id": "contingency_subtotal_contingency",
+      "label": "SUBTOTAL — Contingency",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Financing",
+      "id": "financing_construction_loan_interest",
+      "label": "Construction Loan Interest",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Simplified: base × LTV × rate × term",
+      "formula": true
+    },
+    {
+      "section": "Financing",
+      "id": "financing_loan_origination_fees_1_5",
+      "label": "Loan Origination Fees (~1.5%)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Financing",
+      "id": "financing_subtotal_financing",
+      "label": "SUBTOTAL — Financing",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Financing",
+      "id": "financing_grand_total_excl_land",
+      "label": "GRAND TOTAL (Excl. Land)",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "",
+      "formula": true
+    },
+    {
+      "section": "Financing",
+      "id": "financing_land_all_in_total",
+      "label": "LAND + ALL-IN TOTAL",
+      "low": null,
+      "mid": null,
+      "high": null,
+      "notes": "Land purchase price + all project costs",
+      "formula": true
+    }
+  ],
+  "_meta": {
+    "last_pulled": "2026-05-20T19:11:48.302812",
+    "last_pushed": null
+  }
+}
