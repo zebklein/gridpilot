@@ -2,6 +2,12 @@
 Push local JSON files to Google Sheets, then git-commit the change into
 the project's own git repo.
 
+Row positions are derived fresh from the live sheet on every run — no stored
+row_map.json or input_map.json is trusted as positional truth.
+
+For --dry-run, falls back to cached row_map.json / input_map.json on disk
+(no live sheet connection needed).
+
 Usage:
     python scripts/push.py --project <name>
     python scripts/push.py --project <name> --dry-run
@@ -20,8 +26,8 @@ from project_config import (
     get_project_dir, load_project, load_config, load_input_map, load_row_map,
     get_scenario_row_map_key,
 )
+from sheet_discovery import build_input_map, build_row_map, cache_maps
 from formula_engine import is_formula_item, get_formula_expr_updates
-from validate import validate_row_map
 
 
 def fmt_currency(v):
@@ -46,7 +52,6 @@ def push_inputs(service, spreadsheet_id, project, input_map, project_dir, dry_ru
         except (KeyError, TypeError):
             continue
         value = node if node is not None else ""
-        # Cells may be bare ("B24") or tab-qualified ("CAPITAL!B4")
         range_ref = cell if "!" in cell else f"{tab}!{cell}"
         updates.append({"range": range_ref, "values": [[value]]})
 
@@ -66,17 +71,12 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
     items = data[phase_key]["line_items"] if phase_key else data["line_items"]
     items_by_id = {item["id"]: item for item in items}
 
-    # Validate row_map against the live sheet before writing anything
-    if service is not None:
-        validate_row_map(service, spreadsheet_id, tab_name, row_map, items_by_id, abort=True)
-
-    # Notes column: explicit config overrides default (I for multiphase, F for single-phase)
     if notes_col is None:
         notes_col = "I" if is_multiphase else "F"
     notes_col_letter = notes_col
 
     updates = []
-    formula_updates = []  # written with USER_ENTERED so Sheets interprets '=' as formula
+    formula_updates = []
     skipped = []
 
     for item_id, row_1idx in sorted(row_map.items(), key=lambda x: x[1]):
@@ -86,18 +86,15 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
 
         if is_formula_item(item):
             note = item.get("notes", "")
-            # Never write formula strings — they belong to the sheet, not us
             if note and isinstance(note, str) and not note.startswith("="):
                 updates.append({
                     "range": f"{tab_name}!{notes_col_letter}{row_1idx}",
                     "values": [[note]],
                 })
-            # Write formula_expr cells (git-tracked formulas, restored on every push)
             if input_map and item.get("formula_expr"):
                 formula_updates.extend(
                     get_formula_expr_updates(item, row_1idx, tab_name, input_map, inp_tab)
                 )
-            # Formula Phase 1 items may still carry editable Phase 2 data
             if notes_col and notes_col != "F" and not item.get("formula_expr"):
                 p2 = [fmt_currency(item.get("p2_low")),
                       fmt_currency(item.get("p2_mid")),
@@ -111,7 +108,6 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
             continue
 
         if is_multiphase:
-            # Phase1: cols C-E; Phase2: cols F-H; Notes: col I
             if phase_key and phase_key.endswith("_phase1") or (phase_key and "phase1" in phase_key):
                 row_values = [
                     fmt_currency(item.get("low")),
@@ -132,7 +128,6 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
                     "range": f"{tab_name}!F{row_1idx}:H{row_1idx}",
                     "values": [row_values],
                 })
-            # Notes
             note = item.get("notes", "")
             if note:
                 updates.append({
@@ -142,20 +137,18 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
         else:
             note = item.get("notes", "")
             if isinstance(note, str) and note.startswith("="):
-                note = ""  # never write formula strings
+                note = ""
             row_values = [
                 fmt_currency(item.get("low")),
                 fmt_currency(item.get("mid")),
                 fmt_currency(item.get("high")),
             ]
             if notes_col == "F":
-                # Standard single-phase: pack note into C:F range
                 updates.append({
                     "range": f"{tab_name}!C{row_1idx}:F{row_1idx}",
                     "values": [row_values + [note]],
                 })
             else:
-                # Custom notes column (e.g. "I"): values to C:E or F:H by sheet_phase
                 if item.get("sheet_phase") == 2:
                     updates.append({
                         "range": f"{tab_name}!F{row_1idx}:H{row_1idx}",
@@ -166,7 +159,6 @@ def push_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
                         "range": f"{tab_name}!C{row_1idx}:E{row_1idx}",
                         "values": [row_values],
                     })
-                    # Write Phase 2 values if present
                     p2 = [fmt_currency(item.get("p2_low")),
                           fmt_currency(item.get("p2_mid")),
                           fmt_currency(item.get("p2_high"))]
@@ -210,7 +202,6 @@ def push_kanban(service, spreadsheet_id, project, project_dir, dry_run):
         print(f"  [dry-run] Would update/append {len(tasks)} kanban tasks")
         return
 
-    # Read existing IDs from col A
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
         range=f"{tab}!A2:A1000",
@@ -243,10 +234,6 @@ def push_kanban(service, spreadsheet_id, project, project_dir, dry_run):
             })
         else:
             appends.append(row_data)
-
-    if dry_run:
-        print(f"  [dry-run] Would update {len(updates)} kanban rows, append {len(appends)} new")
-        return
 
     if updates:
         batch_write(service, spreadsheet_id, updates, value_input_option="USER_ENTERED")
@@ -294,19 +281,24 @@ def main():
 
     project_dir = get_project_dir(args.project)
     project     = load_project(project_dir)
-    input_map   = load_input_map(project_dir)
-    row_map     = load_row_map(project_dir)
 
     if args.dry_run:
         print("DRY RUN — no changes will be written to Sheets\n")
-        service = None
-        config  = {"spreadsheet_id": None}
+        service        = None
+        config         = {"spreadsheet_id": None}
+        spreadsheet_id = None
+        # Fall back to cached maps for dry-run preview
+        input_map = load_input_map(project_dir)
+        row_map   = load_row_map(project_dir)
     else:
-        config  = load_config(project_dir)
+        config         = load_config(project_dir)
+        spreadsheet_id = config["spreadsheet_id"]
         print("Authenticating...")
         service = get_service()
-
-    spreadsheet_id = config.get("spreadsheet_id")
+        print("Scanning sheet for current row positions...")
+        input_map = build_input_map(service, spreadsheet_id, project)
+        row_map   = build_row_map(service, spreadsheet_id, project, project_dir)
+        cache_maps(project_dir, input_map, row_map)
 
     print("Pushing BUDGET tab...")
     push_inputs(service, spreadsheet_id, project, input_map, project_dir, args.dry_run)

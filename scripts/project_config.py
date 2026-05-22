@@ -50,22 +50,33 @@ def load_config(project_dir):
 
 
 def load_input_map(project_dir):
+    """
+    Load cached input_map.json from disk.
+
+    Returns {} if the file is absent — pull/push derive the map live from the
+    sheet and only write this file as a debug artifact. The only callers that
+    strictly need it are push.py in --dry-run mode and validate.py.
+    """
     path = os.path.join(project_dir, "input_map.json")
     if not os.path.exists(path):
-        print("ERROR: input_map.json not found. Run init_sheet.py or connect.py first.")
-        sys.exit(1)
+        return {}
     with open(path) as f:
         return json.load(f)
 
 
 def load_row_map(project_dir):
+    """
+    Load cached row_map.json from disk and invert to {item_id: row_int}.
+
+    Returns {} per scenario key if the file is absent. pull/push derive the
+    map live; this file is a debug artifact used by --dry-run and validate.py.
+    """
     path = os.path.join(project_dir, "row_map.json")
     if not os.path.exists(path):
-        print("ERROR: row_map.json not found. Run init_sheet.py or connect.py first.")
-        sys.exit(1)
+        return {}
     with open(path) as f:
         rm = json.load(f)
-    # Return inverted maps: {row_1idx_str: item_id} → {item_id: row_1idx_int}
+    # Storage format: {row_1idx_str: item_id} → inverted: {item_id: row_1idx_int}
     inverted = {}
     for key, mapping in rm.items():
         inverted[key] = {v: int(k) for k, v in mapping.items()}

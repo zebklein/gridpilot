@@ -1,19 +1,17 @@
 """
 Add or remove a line item from the live sheet without re-initializing.
 
-Inserts a row immediately after an existing item, writes the new item's
-data, and updates row_map.json so future push/pull operations stay correct.
+Inserts or deletes a row in the sheet. Row mappings are derived automatically
+on the next pull or push — no manual row_map update is needed.
 
 Usage:
-    python scripts/add_item.py --project <name> --after <existing_id> --new-id <new_id> --scenario <scenario_id>
-    python scripts/add_item.py --project <name> --remove <item_id> --scenario <scenario_id>
+    python scripts/add_item.py --project <name> --scenario <scenario_id> --after <existing_id> --new-id <new_id>
+    python scripts/add_item.py --project <name> --scenario <scenario_id> --remove <item_id>
 
 Workflow for adding:
     1. Add the new item to the relevant scenario JSON file
     2. Run this script with --after <the item it should follow>
-    3. Done — no re-init needed
-
-The scenario ID matches the "id" field in project.json["scenarios"].
+    3. Done — next pull/push re-discovers all row positions automatically
 """
 import os
 import sys
@@ -21,11 +19,9 @@ import json
 import argparse
 
 sys.path.insert(0, os.path.dirname(__file__))
-from sheets_client import get_service, get_sheet_id, batch_write, read_range
-from project_config import (
-    get_project_dir, load_project, load_config, load_row_map, save_row_map,
-    get_scenario_row_map_key,
-)
+from sheets_client import get_service, get_sheet_id, batch_write
+from project_config import get_project_dir, load_project, load_config
+from sheet_discovery import scan_label_to_row
 from formula_engine import is_formula_item
 
 
@@ -53,13 +49,6 @@ def delete_row(service, spreadsheet_id, sheet_id, row_1idx):
             }
         }]},
     ).execute()
-
-
-def shift_row_map(rm, map_key, from_row_1idx, delta):
-    rm[map_key] = {
-        item_id: (row + delta if row >= from_row_1idx else row)
-        for item_id, row in rm[map_key].items()
-    }
 
 
 def find_scenario(project, scenario_id):
@@ -103,7 +92,6 @@ def write_item_to_sheet(service, spreadsheet_id, tab_name, row_1idx, item, is_mu
             "values": values,
         }])
     else:
-        # Write to correct phase columns
         if phase_key and "phase1" in phase_key:
             values = [[item.get("section", ""), item.get("label", ""),
                        v(item.get("low")), v(item.get("mid")), v(item.get("high")),
@@ -119,76 +107,70 @@ def write_item_to_sheet(service, spreadsheet_id, tab_name, row_1idx, item, is_mu
         }])
 
 
-def do_add(service, spreadsheet_id, after_id, new_id, scenario, project_dir, rm):
+def _find_item_row(service, spreadsheet_id, project_dir, scenario, item_id):
+    """
+    Locate an item's current row by scanning the sheet for its label.
+    Returns row_1idx (int) or None if not found.
+    """
+    item, _ = load_item_from_json(project_dir, scenario, item_id)
+    if item is None:
+        return None, None
+    label = item.get("label", "").strip()
+    if not label:
+        return None, item
+    label_to_row = scan_label_to_row(service, spreadsheet_id, scenario["tab"])
+    return label_to_row.get(label.lower()), item
+
+
+def do_add(service, spreadsheet_id, after_id, new_id, scenario, project_dir):
     is_mp = bool(scenario.get("phases"))
     primary_phase = scenario["phases"][0] if is_mp else None
-    rm_key = get_scenario_row_map_key(scenario, primary_phase)
     tab_name = scenario["tab"]
 
-    if after_id not in rm.get(rm_key, {}):
-        print(f"ERROR: '{after_id}' not found in row_map for scenario '{scenario['id']}'.")
-        print(f"  Known IDs: {sorted(rm.get(rm_key, {}).keys())}")
+    # Find the anchor row by scanning the live sheet
+    after_row, after_item = _find_item_row(service, spreadsheet_id, project_dir, scenario, after_id)
+    if after_item is None:
+        print(f"ERROR: '{after_id}' not found in scenario JSON.")
+        sys.exit(1)
+    if after_row is None:
+        print(f"ERROR: '{after_id}' label '{after_item.get('label', '')}' not found in {tab_name} tab.")
+        print(f"  The item may have been renamed or deleted in the sheet.")
         sys.exit(1)
 
-    after_row = rm[rm_key][after_id]
-
-    # Pre-flight: confirm the sheet label at after_row matches what row_map expects
-    label_data = read_range(service, spreadsheet_id, f"{tab_name}!B{after_row}")
-    actual_label = label_data[0][0] if label_data and label_data[0] else "(empty)"
-    after_item, _ = load_item_from_json(project_dir, scenario, after_id)
-    expected_label = after_item.get("label", "") if after_item else ""
-    if expected_label and actual_label.strip() != expected_label.strip():
-        print(f"  ERROR: row_map drift detected!")
-        print(f"    row_map: '{after_id}' → row {after_row}")
-        print(f"    Sheet row {after_row} label: '{actual_label}'")
-        print(f"    Expected label:              '{expected_label}'")
-        print(f"  Fix row_map.json before running add_item.py.")
-        sys.exit(1)
-    print(f"  Pre-flight OK: row {after_row} = '{actual_label}'")
-    print(f"  Inserting row after '{after_id}' (row {after_row})...")
+    print(f"  Anchor '{after_id}' found at row {after_row} ('{after_item.get('label', '')}').")
+    print(f"  Inserting row after row {after_row}...")
 
     sheet_id = get_sheet_id(service, spreadsheet_id, tab_name)
     new_row = insert_row_after(service, spreadsheet_id, sheet_id, after_row)
     print(f"  Row inserted at position {new_row}.")
 
-    for key in rm:
-        shift_row_map(rm, key, new_row, +1)
-    rm[rm_key][new_id] = new_row
-
     item, phase_key = load_item_from_json(project_dir, scenario, new_id)
     if item is None:
         print(f"  WARNING: '{new_id}' not found in JSON. Row inserted but left blank.")
-        print(f"  Add it to the JSON file then run: python scripts/push.py --project ...")
+        print(f"  Add it to the JSON file, then run pull to re-sync row positions.")
     else:
         write_item_to_sheet(service, spreadsheet_id, tab_name, new_row, item, is_mp, phase_key)
         print(f"  '{new_id}' written to row {new_row}.")
 
-    save_row_map(project_dir, rm)
-    print(f"  row_map.json updated.")
+    print(f"  Row positions will be re-discovered automatically on next pull/push.")
 
 
-def do_remove(service, spreadsheet_id, item_id, scenario, project_dir, rm):
-    is_mp = bool(scenario.get("phases"))
-    primary_phase = scenario["phases"][0] if is_mp else None
-    rm_key = get_scenario_row_map_key(scenario, primary_phase)
+def do_remove(service, spreadsheet_id, item_id, scenario, project_dir):
     tab_name = scenario["tab"]
 
-    if item_id not in rm.get(rm_key, {}):
-        print(f"ERROR: '{item_id}' not found in row_map for scenario '{scenario['id']}'.")
+    row, item = _find_item_row(service, spreadsheet_id, project_dir, scenario, item_id)
+    if item is None:
+        print(f"ERROR: '{item_id}' not found in scenario JSON.")
+        sys.exit(1)
+    if row is None:
+        print(f"ERROR: '{item_id}' label '{item.get('label', '')}' not found in {tab_name} tab.")
+        print(f"  The item may have already been removed from the sheet.")
         sys.exit(1)
 
-    row = rm[rm_key][item_id]
-    print(f"  Deleting row {row} ('{item_id}')...")
-
+    print(f"  Deleting row {row} ('{item_id}' — '{item.get('label', '')}')...")
     sheet_id = get_sheet_id(service, spreadsheet_id, tab_name)
     delete_row(service, spreadsheet_id, sheet_id, row)
-
-    del rm[rm_key][item_id]
-    for key in rm:
-        shift_row_map(rm, key, row + 1, -1)
-
-    save_row_map(project_dir, rm)
-    print(f"  Row deleted. row_map.json updated.")
+    print(f"  Row deleted. Row positions will be re-discovered on next pull/push.")
 
 
 def main():
@@ -207,7 +189,6 @@ def main():
     project_dir = get_project_dir(args.project)
     project     = load_project(project_dir)
     config      = load_config(project_dir)
-    rm          = load_row_map(project_dir)
 
     scenario = find_scenario(project, args.scenario)
     if scenario is None:
@@ -219,13 +200,13 @@ def main():
     service = get_service()
 
     if args.remove:
-        do_remove(service, config["spreadsheet_id"], args.remove, scenario, project_dir, rm)
+        do_remove(service, config["spreadsheet_id"], args.remove, scenario, project_dir)
     else:
         if not args.new_id:
             print("ERROR: --new-id required when using --after")
             sys.exit(1)
         do_add(service, config["spreadsheet_id"], args.after, args.new_id,
-               scenario, project_dir, rm)
+               scenario, project_dir)
 
 
 if __name__ == "__main__":

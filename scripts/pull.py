@@ -2,6 +2,9 @@
 Pull current values from Google Sheets into local JSON files, then git-commit
 the snapshot into the project's own git repo.
 
+Row positions are derived fresh from the live sheet on every run — no stored
+row_map.json or input_map.json is trusted as positional truth.
+
 Always run pull before asking an AI assistant to make edits.
 
 Usage:
@@ -16,10 +19,8 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(__file__))
 from sheets_client import get_service
-from project_config import (
-    get_project_dir, load_project, load_config, load_input_map, load_row_map,
-    get_scenario_row_map_key, get_inputs_value,
-)
+from project_config import get_project_dir, load_project, load_config, get_scenario_row_map_key
+from sheet_discovery import build_input_map, build_row_map, cache_maps
 
 
 def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
@@ -28,7 +29,6 @@ def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
     with open(inputs_path) as f:
         data = json.load(f)
 
-    # Build (key, cell) pairs from input_map
     # Cells may be bare ("B24") or tab-qualified ("CAPITAL!B4")
     key_cell_pairs = list(input_map.items())
     ranges = [cell if "!" in cell else f"{tab}!{cell}" for _, cell in key_cell_pairs]
@@ -53,7 +53,6 @@ def pull_inputs(service, spreadsheet_id, project, input_map, project_dir):
             except (ValueError, AttributeError):
                 pass
 
-        # Set the value in the nested JSON structure
         parts = key.split(".")
         node = data
         for part in parts[:-1]:
@@ -87,11 +86,6 @@ def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
     items = data[phase_key]["line_items"] if phase_key else data["line_items"]
     items_by_id = {item["id"]: item for item in items}
 
-    # Determine notes column letter based on number of value columns
-    # Single-phase: C=Low, D=Mid, E=High, F=Notes  → read C:F
-    # Multi-phase:  C-E=P1, F-H=P2, I=Notes         → read C:I
-    # We detect by checking if any item has phase2 columns (items with _p2 suffix)
-    # Simplest: always read C:I and handle what we get
     row_list = sorted(row_map.items())  # [(item_id, row_1idx), ...]
     ranges = [f"{tab_name}!C{row}:I{row}" for _, row in row_list]
 
@@ -110,18 +104,14 @@ def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
             continue
         row_vals = value_ranges[i].get("values", [[]])[0] if value_ranges[i].get("values") else []
 
-        # Skip formula-driven items — their values are owned by the sheet
         if item.get("formula"):
             continue
 
-        # Only update items that carry editable values (non-formula, non-null)
         if item.get("low") is not None or item.get("mid") is not None:
-            # sheet_phase==2 items live in F-H (indices 3-5), others in C-E (indices 0-2)
             v_off = 3 if (notes_col and item.get("sheet_phase") == 2) else 0
             item["low"]  = parse_num(row_vals[v_off])     if len(row_vals) > v_off     else item["low"]
             item["mid"]  = parse_num(row_vals[v_off + 1]) if len(row_vals) > v_off + 1 else item["mid"]
             item["high"] = parse_num(row_vals[v_off + 2]) if len(row_vals) > v_off + 2 else item["high"]
-            # Notes index: derived from explicit notes_col config, else F(3) or I(6)
             if notes_col:
                 notes_idx = ord(notes_col.upper()) - ord('C')
             else:
@@ -131,7 +121,6 @@ def pull_scenario(service, spreadsheet_id, tab_name, row_map, json_path, phase_k
             elif len(row_vals) > 3:
                 item["notes"] = row_vals[3]
 
-        # Sync Phase 2 values (F-H) for custom-notes-col scenarios
         if notes_col and notes_col != "F" and item.get("sheet_phase") != 2:
             if "p2_low" in item or "p2_mid" in item or "p2_high" in item:
                 item["p2_low"]  = parse_num(row_vals[3]) if len(row_vals) > 3 else item.get("p2_low")
@@ -185,7 +174,6 @@ def pull_kanban(service, spreadsheet_id, project, project_dir):
             existing[new_id] = {"id": new_id, **task_data}
             write_back.append((i + 2, new_id))
 
-    # Write back any IDs we assigned for human-added rows
     if write_back:
         from sheets_client import batch_write as bw
         bw(service, spreadsheet_id, [
@@ -223,16 +211,18 @@ def main():
     parser.add_argument("--project", required=True, help="Project name")
     args = parser.parse_args()
 
-    project_dir = get_project_dir(args.project)
-    project     = load_project(project_dir)
-    config      = load_config(project_dir)
-    input_map   = load_input_map(project_dir)
-    row_map     = load_row_map(project_dir)
-
+    project_dir    = get_project_dir(args.project)
+    project        = load_project(project_dir)
+    config         = load_config(project_dir)
     spreadsheet_id = config["spreadsheet_id"]
 
     print("Authenticating...")
     service = get_service()
+
+    print("Scanning sheet for current row positions...")
+    input_map = build_input_map(service, spreadsheet_id, project)
+    row_map   = build_row_map(service, spreadsheet_id, project, project_dir)
+    cache_maps(project_dir, input_map, row_map)
 
     print("Pulling BUDGET tab...")
     pull_inputs(service, spreadsheet_id, project, input_map, project_dir)
